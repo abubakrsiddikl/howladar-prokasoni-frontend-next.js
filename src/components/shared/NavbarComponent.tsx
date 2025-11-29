@@ -12,8 +12,11 @@ import Image from "next/image";
 import SearchInput from "./SearchInput";
 import { IUser, TRole } from "@/types";
 import { getDefaultDashboardRoute } from "@/utils/auth-utils";
+import useCart from "@/hooks/useCart";
 
 export default function NavbarComponent({ user }: { user: IUser | null }) {
+ 
+  const {cart} = useCart();
   //  NavLink Generator
   const navLink = (href: string, label: string) => (
     <Link
@@ -25,7 +28,7 @@ export default function NavbarComponent({ user }: { user: IUser | null }) {
   );
 
   return (
-    <div>
+   
       <div className="sticky top-0 z-50">
         {/* this navbar */}
         <nav className="bg-[#727088] shadow ">
@@ -106,11 +109,11 @@ export default function NavbarComponent({ user }: { user: IUser | null }) {
                   className="relative flex items-center px-3 py-2 rounded-md hover:underline"
                 >
                   <ShoppingCart className="h-7 w-7 text-white" />
-                  {/* {cart?.length > 0 && (
+                  {cart?.length > 0 && (
                     <span className="absolute top-1 right-1 bg-[#ff8600] text-white text-xs px-1.5 rounded-full font-bold">
                       {cart.length}
                     </span>
-                  )} */}
+                  )}
                 </Link>
               </div>
             </div>
@@ -123,6 +126,6 @@ export default function NavbarComponent({ user }: { user: IUser | null }) {
           </div>
         </nav>
       </div>
-    </div>
+    
   );
 }

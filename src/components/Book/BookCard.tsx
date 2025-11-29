@@ -1,10 +1,10 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
+import useCart from "@/hooks/useCart";
 
-import type { IBook,  } from "@/types";
+import type { IBook } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-
 
 export default function BookCard({
   _id,
@@ -17,9 +17,18 @@ export default function BookCard({
   stock,
   slug,
 }: IBook) {
-  
+  const { addToCart } = useCart();
+
   const handleAddToCart = async () => {
-   
+    addToCart({
+      quantity: 1,
+      book: {
+        _id,
+        coverImage,
+        price,
+        title,
+      },
+    });
   };
 
   return (

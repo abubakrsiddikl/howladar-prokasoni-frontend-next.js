@@ -1,6 +1,7 @@
 export * from "./book.type";
 export * from "./genre.type";
 export * from "./auth.type";
+export * from "./cart.type"
 
 export interface IResponse<T> {
   statusCode: number;
