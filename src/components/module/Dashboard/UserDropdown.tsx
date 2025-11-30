@@ -15,7 +15,7 @@ import { IUser } from "@/types";
 
 import { Settings, User } from "lucide-react";
 import Link from "next/link";
-import LogoutButton from "../shared/LogoutButton";
+import LogoutButton from "../../shared/LogoutButton";
 
 interface UserDropdownProps {
   userInfo: IUser;

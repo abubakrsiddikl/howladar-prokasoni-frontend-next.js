@@ -29,7 +29,7 @@ export const customerNavItems: NavSection[] = [
     items: [
       {
         title: "My Orders",
-        href: "/customer/my-orders",
+        href: "/customer/dashboard/orders",
         icon: "ListOrdered",
         roles: ["CUSTOMER"],
       },
@@ -43,25 +43,25 @@ export const storeManagerNavItems: NavSection[] = [
     items: [
       {
         title: "Add New Book",
-        href: "/store-manager/book/create",
+        href: "/store-manager/dashboard/book",
         icon: "Plus",
         roles: ["STORE_MANAGER", "ADMIN"],
       },
       {
         title: "Add Book Category",
-        href: "/store-manager/book/genre",
+        href: "/store-manager/dashboard/genre",
         icon: "Layers",
         roles: ["STORE_MANAGER", "ADMIN"],
       },
       {
         title: "All Orders",
-        href: "/store-manager/book/all-orders",
+        href: "/store-manager/dashboard/orders",
         icon: "ShoppingCart",
         roles: ["STORE_MANAGER", "ADMIN"],
       },
       {
         title: "Add Banner",
-        href: "/store-manager/banner/add",
+        href: "/store-manager/dashboard/banner",
         icon: "ImagePlus",
         roles: ["STORE_MANAGER", "ADMIN"],
       },

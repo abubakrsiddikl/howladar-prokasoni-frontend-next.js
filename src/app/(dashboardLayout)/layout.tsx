@@ -1,5 +1,5 @@
-import DashboardNavbar from "@/components/Dashboard/DashboardNavbar";
-import DashboardSidebar from "@/components/Dashboard/DashboardSidebar";
+import DashboardNavbar from "@/components/module/Dashboard/DashboardNavbar";
+import DashboardSidebar from "@/components/module/Dashboard/DashboardSidebar";
 import React from "react";
 
 const CommonDashboardLayout = async ({

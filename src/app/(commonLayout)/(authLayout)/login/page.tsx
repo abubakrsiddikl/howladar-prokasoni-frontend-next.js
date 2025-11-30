@@ -1,4 +1,5 @@
-import LoginForm from "@/components/Authentication/LoginForm";
+import LoginForm from "@/components/module/Authentication/LoginForm";
+
 
 export default async function LoginPage({
   searchParams,

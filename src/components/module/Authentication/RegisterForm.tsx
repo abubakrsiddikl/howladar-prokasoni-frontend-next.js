@@ -2,14 +2,17 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
-import { Field, FieldDescription, FieldGroup, FieldLabel } from "../ui/field";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+
+
 import { registerUser } from "@/services/Auth/auth.api";
-import PasswordInput from "../shared/PasswordInput";
-import { Checkbox } from "../ui/checkbox";
+
 import { toast } from "sonner";
-import InputFieldError from "../shared/InputFieldError";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import InputFieldError from "@/components/shared/InputFieldError";
+import PasswordInput from "@/components/shared/PasswordInput";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
 
 export default function RegisterForm() {
   const [state, formAction, pending] = useActionState(registerUser, null);

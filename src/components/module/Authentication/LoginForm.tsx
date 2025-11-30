@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useActionState, useEffect } from "react";
-import { Field, FieldDescription, FieldGroup, FieldLabel } from "../ui/field";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import InputFieldError from "@/components/shared/InputFieldError";
+import { Button } from "@/components/ui/button";
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import { loginUser } from "@/services/Auth/auth.api";
-import InputFieldError from "../shared/InputFieldError";
+import { useActionState, useEffect } from "react";
+
+
 import { toast } from "sonner";
 
 const LoginForm = ({ redirect }: { redirect?: string }) => {
@@ -13,9 +15,7 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
   useEffect(() => {
     if (state && !state.success && state.message) {
       toast.error(state.message);
-    } else {
-      toast.success("Login successful!");
-    }
+    } 
   }, [state]);
   return (
     <form action={formAction}>
