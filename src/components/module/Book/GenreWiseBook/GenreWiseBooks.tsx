@@ -1,7 +1,7 @@
 import type { IGenre } from "@/types";
 
-import { GenreSection } from "@/components/Book/GenreWiseBook/GenreSection";
-import { getAllGenres } from "@/services/Book/book.api";
+import { GenreSection } from "./GenreSection";
+import { getAllGenres } from "@/services/Genre/genre.api";
 
 export default async function GenreWiseBooks() {
   const genreRes = await getAllGenres();

@@ -1,11 +1,12 @@
 "use client";
 import { IBook } from "@/types";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { useState } from "react";
-import { Button } from "../ui/button";
+
 import PreviewGalleryDialog from "./PreviewGalleryDialog";
 import BookCard from "./BookCard";
+import { Button } from "@/components/ui/button";
 
 interface BookDetailsCardProps {
   book: IBook;
@@ -14,7 +15,7 @@ interface BookDetailsCardProps {
 
 export default function BookDetailsCard({
   book,
-  similarBooks=[],
+  similarBooks = [],
 }: BookDetailsCardProps) {
   const [open, setOpen] = useState(false);
   const handleAddToCart = () => {};
@@ -32,7 +33,7 @@ export default function BookDetailsCard({
           {/* Book Cover */}
           <div className="relative col-span-1 ">
             <Image
-              src={book.coverImage}
+              src={book.coverImage!}
               alt={book.title}
               fill
               className="p-3  object-cover rounded-lg cursor-pointer "
@@ -70,7 +71,7 @@ export default function BookDetailsCard({
                       {book.price}৳
                     </span>
                     <span className="line-through text-gray-500">
-                      {book.price + book.discountedPrice}৳
+                      {book.price + book.discountedPrice!}৳
                     </span>
                     <span className="text-[#ff8600] text-sm font-medium">
                       Your Save Tk.{book.discountedPrice}({book.discount}%)

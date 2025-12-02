@@ -7,7 +7,7 @@ import Link from "next/link";
 import { getAllBooks } from "@/services/Book/book.api";
 
 export async function GenreSection({ genre }: { genre: IGenre }) {
-  const getAllBooksByGenre = await getAllBooks(`genre=${genre.name}`, 10);
+  const getAllBooksByGenre = await getAllBooks(`genre=${genre.name}&limit=10`);
 
   return (
     <Card className="relative border border-[#ff8600] shadow-none">
@@ -29,7 +29,7 @@ export async function GenreSection({ genre }: { genre: IGenre }) {
         </div>
 
         {/* Carousel inside Genre Card */}
-        <GenreSwiper books={getAllBooksByGenre} />
+        <GenreSwiper books={getAllBooksByGenre.data} />
       </CardContent>
     </Card>
   );

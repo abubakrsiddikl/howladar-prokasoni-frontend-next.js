@@ -4,11 +4,19 @@ export * from "./auth.type";
 export * from "./cart.type";
 export * from "./dashboard.type";
 
+export interface TMeta {
+  total: number;
+  totalPage: number;
+  page: number;
+  limit: number;
+}
+
 export interface IResponse<T> {
   statusCode: number;
   success: boolean;
   message: string;
   data: T;
+  meta?: TMeta;
 }
 
 type ZodIssue = {

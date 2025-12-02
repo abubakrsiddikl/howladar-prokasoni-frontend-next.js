@@ -8,16 +8,16 @@ export interface IBook {
     _id: string;
     name: string;
   };
-  discount: number;
-  discountedPrice: number;
-  description: string;
-  coverImage: string;
-  previewImages: string[];
-  available: boolean;
-  publisher: string;
-  createdAt: string;
-  updatedAt: string;
-  slug: string;
+  discount?: number;
+  discountedPrice?: number;
+  description?: string;
+  coverImage?: string;
+  previewImages?: string[];
+  available?: boolean;
+  publisher?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  slug?: string;
 }
 
 export const Genre = {

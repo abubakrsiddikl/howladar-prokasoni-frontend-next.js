@@ -1,4 +1,4 @@
-import GenreWiseBooks from "../../components/Book/GenreWiseBook/GenreWiseBooks";
+import GenreWiseBooks from "@/components/module/Book/GenreWiseBook/GenreWiseBooks";
 
 export default function HomePage() {
   return (

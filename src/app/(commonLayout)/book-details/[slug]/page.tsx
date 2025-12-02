@@ -1,4 +1,5 @@
-import BookDetailsCard from "@/components/Book/BookDetailsCard";
+
+import BookDetailsCard from "@/components/module/Book/BookDetailsCard";
 import { getAllBooks, getSingleBook } from "@/services/Book/book.api";
 
 export default async function BookDetailsPage(props: {
