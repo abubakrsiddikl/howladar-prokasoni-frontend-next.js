@@ -28,7 +28,6 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 
-
 export interface Column<T> {
   header: string;
   accessor: keyof T | ((row: T) => React.ReactNode);
@@ -47,8 +46,6 @@ interface ManagementTableProps<T> {
   isRefreshing?: boolean;
 }
 
-
-
 function ManagementTable<T>({
   data = [],
   columns = [],
@@ -64,7 +61,7 @@ function ManagementTable<T>({
   const searchParams = useSearchParams();
   const [, startTransition] = useTransition();
 
-  const currentSortBy = searchParams.get("sortBy") || "";
+  const currentSortBy = searchParams.get("sort") || "";
   const currentSortOrder = searchParams.get("sortOrder") || "desc";
 
   const handleSort = (sortKey: string) => {
@@ -76,7 +73,7 @@ function ManagementTable<T>({
       params.set("sortOrder", newOrder);
     } else {
       // New column, default to descending
-      params.set("sortBy", sortKey);
+      params.set("sort", sortKey);
       params.set("sortOrder", "desc");
     }
 

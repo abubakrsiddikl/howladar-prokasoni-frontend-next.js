@@ -1,3 +1,4 @@
+import BookFilters from "@/components/module/StoreManagement/Book/BookFilters";
 import BooksManagementHeader from "@/components/module/StoreManagement/Book/BookManagementHeader";
 import BooksTable from "@/components/module/StoreManagement/Book/BooksTable";
 import TablePagination from "@/components/shared/Management/TablePagination";
@@ -15,14 +16,17 @@ export default async function BookPage({
   const searchParamsObj = await searchParams;
   const queryString = queryStringFormatter(searchParamsObj);
 
-  const genre = await getAllGenres();
+  const genres = await getAllGenres();
   const books = await getAllBooks(queryString);
 
   return (
-    <div>
-      <BooksManagementHeader genre={genre}></BooksManagementHeader>
+    <div className="space-y-5">
+      <BooksManagementHeader
+        genres={genres?.data || []}
+      ></BooksManagementHeader>
+      <BookFilters genres={genres?.data || []} />
       <Suspense fallback={<TableSkeleton columns={10} rows={10} />}>
-        <BooksTable books={books?.data || []} genres={genre || []} />
+        <BooksTable books={books?.data || []} genres={genres?.data || []} />
         <TablePagination
           currentPage={books?.meta?.page || 1}
           totalPages={books.meta?.totalPage || 1}

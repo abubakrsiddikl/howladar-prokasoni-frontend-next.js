@@ -1,16 +1,18 @@
 "use client";
 
+import { IGenre } from "@/types";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import BookFormDialog from "./BookFormDialog";
-import ManagementPageHeader from "@/components/shared/Management/ManagementPageHeader";
-import { IGenre } from "@/types";
 
-interface BooksManagementHeaderProps {
-  genres: IGenre[];
+import ManagementPageHeader from "@/components/shared/Management/ManagementPageHeader";
+import GenreFormDialog from "./GenreFormDialog";
+
+interface GenresManagementHeaderProps {
+  genre?: IGenre;
 }
-const BooksManagementHeader = ({ genres }: BooksManagementHeaderProps) => {
+
+const GenresManagementHeader = ({ genre }: GenresManagementHeaderProps) => {
   const router = useRouter();
   const [, startTransition] = useTransition();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -33,19 +35,19 @@ const BooksManagementHeader = ({ genres }: BooksManagementHeaderProps) => {
   };
   return (
     <>
-      <BookFormDialog
+      <GenreFormDialog
         key={dialogKey}
         open={isDialogOpen}
         onClose={handleCloseDialog}
         onSuccess={handleSuccess}
-        genres={genres}
+        genre={genre}
       />
 
       <ManagementPageHeader
-        title="Books Management"
-        description="Manage Book information and details"
+        title="Genre Management"
+        description="Manage Genre information and details"
         action={{
-          label: "Add Book    ",
+          label: "Add Genre",
           icon: Plus,
           onClick: handleOpenDialog,
         }}
@@ -54,4 +56,4 @@ const BooksManagementHeader = ({ genres }: BooksManagementHeaderProps) => {
   );
 };
 
-export default BooksManagementHeader;
+export default GenresManagementHeader;
