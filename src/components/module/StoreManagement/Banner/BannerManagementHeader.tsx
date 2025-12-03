@@ -1,14 +1,14 @@
 "use client";
 
-
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 import ManagementPageHeader from "@/components/shared/Management/ManagementPageHeader";
-import GenreFormDialog from "./GenreFormDialog";
 
-const GenresManagementHeader = () => {
+import BannerFormDialog from "./BannerFormDialog";
+
+const BannerManagementHeader = () => {
   const router = useRouter();
   const [, startTransition] = useTransition();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -31,7 +31,7 @@ const GenresManagementHeader = () => {
   };
   return (
     <>
-      <GenreFormDialog
+      <BannerFormDialog
         key={dialogKey}
         open={isDialogOpen}
         onClose={handleCloseDialog}
@@ -39,10 +39,10 @@ const GenresManagementHeader = () => {
       />
 
       <ManagementPageHeader
-        title="Genre Management"
-        description="Manage Genre information and details"
+        title="Banner Management"
+        description="Manage Banner information and details"
         action={{
-          label: "Add Genre",
+          label: "Add Banner    ",
           icon: Plus,
           onClick: handleOpenDialog,
         }}
@@ -51,4 +51,4 @@ const GenresManagementHeader = () => {
   );
 };
 
-export default GenresManagementHeader;
+export default BannerManagementHeader;

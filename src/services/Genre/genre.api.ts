@@ -4,8 +4,10 @@ import { apiRequest } from "../apiClient";
 import { zodValidator } from "@/lib/zodValidator";
 import { genreSchema } from "@/zodSchema/genre.schema";
 
-export const getAllGenres = async (): Promise<IResponse<IGenre[]>> => {
-  const res = await apiRequest<IGenre[]>("/genre");
+export const getAllGenres = async (
+  queryString?: string
+): Promise<IResponse<IGenre[]>> => {
+  const res = await apiRequest<IGenre[]>(`/genre?${queryString ?? ""}`);
   return res;
 };
 
@@ -43,11 +45,10 @@ export const createGenre = async (
   return result;
 };
 
-
 // delete genre
 export const deleteGenre = async (id: string) => {
-  const result = apiRequest(`/genre/${id}`,{
-    method: "DELETE"
+  const result = apiRequest(`/genre/${id}`, {
+    method: "DELETE",
   });
   return result;
 };

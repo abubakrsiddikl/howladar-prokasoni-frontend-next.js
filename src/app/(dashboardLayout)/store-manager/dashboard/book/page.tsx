@@ -18,7 +18,6 @@ export default async function BookPage({
 
   const genres = await getAllGenres();
   const books = await getAllBooks(queryString);
-
   return (
     <div className="space-y-5">
       <BooksManagementHeader
