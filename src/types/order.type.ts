@@ -1,9 +1,10 @@
-
 export interface IOrderItem {
   book: {
     title: string;
     coverImage: string;
-    price: string;
+    price: number;
+    discount: number;
+    discountedPrice: number;
   };
   quantity: number;
 }
@@ -50,4 +51,3 @@ export interface IOrderStats {
   shipped: number;
   cancelled: number;
 }
-

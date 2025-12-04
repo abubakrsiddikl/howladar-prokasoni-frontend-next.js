@@ -18,7 +18,7 @@ const OrdersTable = ({ orders, user }: OrdersTableProps) => {
   const orderColumns = getOrderColumns(user);
   const handleView = (order: IOrder) => {
     startTransition(() => {
-      router.push(`/order-details/${order.orderId}`);
+      router.push(`/order/${order.orderId}`);
     });
   };
   return (

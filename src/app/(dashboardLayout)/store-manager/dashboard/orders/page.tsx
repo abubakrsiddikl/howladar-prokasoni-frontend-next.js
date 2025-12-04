@@ -19,7 +19,8 @@ export default async function OrdersPage({
   const orders = await getAllOrders(queryString);
 
   return (
-    <div>
+    <div className="space-y-4">
+      <h1 className="text-3xl font-bold">Order Management</h1>
       <OrderFilters></OrderFilters>
       <Suspense fallback={<TableSkeleton columns={10} rows={10} />}>
         <OrdersTable orders={orders?.data || []} user={user || {}} />
