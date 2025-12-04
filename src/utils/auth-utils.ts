@@ -13,7 +13,7 @@ export const commonProtectedRoutes: RouteConfig = {
 };
 
 export const customerProtectedRoutes: RouteConfig = {
-  exact: [],
+  exact: ["/checkout"],
   pattern: [/^\/customer/],
 };
 

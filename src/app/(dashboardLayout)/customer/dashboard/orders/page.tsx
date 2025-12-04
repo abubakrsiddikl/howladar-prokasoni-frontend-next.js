@@ -1,7 +1,10 @@
 
 
-export default function CustomerOrderPage() {
+export default async function CustomerOrderPage() {
+ 
   return (
-    <div>CustomerOrderPage</div>
-  )
+    <div>
+      OrderPage
+    </div>
+  );
 }

@@ -4,6 +4,7 @@ export * from "./auth.type";
 export * from "./cart.type";
 export * from "./dashboard.type";
 export * from "./banner.type"
+export * from "./order.type"
 
 export interface TMeta {
   total: number;
