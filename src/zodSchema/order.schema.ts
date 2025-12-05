@@ -17,3 +17,18 @@ export const orderStatusSchema = z
     message: "Order status is required.",
     path: ["status"],
   });
+
+export const shippingInfoSchema = z.object({
+    name: z.string(),
+    email: z.string(),
+    phone: z.string(),
+    address: z.string(),
+    division: z.string(),
+    district: z.string(),
+    city: z.string(),
+});
+
+
+export const paymentMethodSchema = z.object({
+    paymentMethod: z.enum(["COD", "SSLCommerz"]),
+});

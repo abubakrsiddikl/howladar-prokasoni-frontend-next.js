@@ -1,7 +1,10 @@
+import ShippingForm from "@/components/module/Checkout/ShippingForm";
 
 
 export default function CheckoutPage() {
   return (
-    <div>CheckoutPage</div>
+    <div>
+      <ShippingForm></ShippingForm>
+    </div>
   )
 }

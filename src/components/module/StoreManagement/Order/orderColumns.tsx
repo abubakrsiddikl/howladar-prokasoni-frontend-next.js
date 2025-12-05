@@ -1,4 +1,4 @@
-// orderColumns.ts
+
 
 import { Column } from "@/components/shared/Management/ManagementTable";
 import { userRoleConstant } from "@/constant/role";

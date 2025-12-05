@@ -31,12 +31,6 @@ const OrdersTable = ({ orders, user }: OrdersTableProps) => {
         emptyMessage="No Orders found"
       />
 
-      {/* View Doctor Detail Dialog
-      <DoctorViewDetailDialog
-        open={!!viewingBanner}
-        onClose={() => setViewingBanner(null)}
-        doctor={viewingBanner}
-      /> */}
     </>
   );
 };
