@@ -1,5 +1,4 @@
 import OrdersTable from "@/components/module/StoreManagement/Order/OrdersTable";
-import TablePagination from "@/components/shared/Management/TablePagination";
 import { TableSkeleton } from "@/components/shared/Management/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatter";
 import { getUserProfile } from "@/services/Auth/auth.api";

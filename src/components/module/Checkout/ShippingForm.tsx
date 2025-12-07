@@ -64,7 +64,12 @@ export default function ShippingForm() {
   console.log(state);
 
   useEffect(() => {
-    if (state?.success) {
+    if (state?.success && state.paymentUrl) {
+      toast.info("SSLCommerz to redirect");
+      clearCart();
+      
+      window.location.href = state.paymentUrl;
+    } else if (state?.success) {
       toast.success(state.message || "Order created successfully!");
       clearCart();
       router.push(`/order/order-success/${state?.data?.orderId}`);

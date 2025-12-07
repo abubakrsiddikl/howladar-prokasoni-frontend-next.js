@@ -133,10 +133,17 @@ export const createOrder = async (
     paymentMethod: paymentValidationResult.data.paymentMethod,
   };
 
-  const result = await apiRequest("/order/create", {
+  const result = await apiRequest<{ paymentUrl?: boolean }>("/order/create", {
     method: "POST",
     body: JSON.stringify(payload),
   });
+  if (result.data?.paymentUrl) {
+    return {
+      success: true,
+      message: "SSLCommerz payment initiated. Redirecting...",
+      paymentUrl: result.data.paymentUrl,
+    };
+  }
 
   return result;
 };

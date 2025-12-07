@@ -1,9 +1,12 @@
 "use client";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 export default function OrderSuccessPage() {
   const { id } = useParams();
+  const searchParams = useSearchParams();
+
+  const transactionId = searchParams.get("transactionId");
 
   return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center px-4">
@@ -20,16 +23,21 @@ export default function OrderSuccessPage() {
             🎯 <strong>আপনার অর্ডার আইডি : </strong># {id}
           </p>
         )}
+        {transactionId && (
+          <p className="mb-4 text-sm text-gray-600">
+            🎯 <strong>আপনার ট্রান্সেকশন আইডি : </strong># {transactionId}
+          </p>
+        )}
 
         <div className="flex gap-4 justify-center">
           <Link
-            href="/user/my-orders"
+            href="/customer/dashboard/orders"
             className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700"
           >
             🧾 অর্ডার সমূহ দেখুন
           </Link>
           <Link
-            href="/customer/dashboard/orders"
+            href="/"
             className="bg-gray-200 text-gray-800 px-5 py-2 rounded hover:bg-gray-300"
           >
             🏠 হোমে যান

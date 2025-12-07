@@ -58,14 +58,14 @@ export default function OrderDetailsCard({
             : "bg-orange-500"
         }`}
       >
-        This order has been {order.currentStatus.toLowerCase()}.
+        This order has been {order?.currentStatus?.toLowerCase()}.
       </div>
 
       {/* Order Header */}
       <div className="border-b pb-4">
-        <h1 className="text-xl font-bold">Order: {order.orderId}</h1>
+        <h1 className="text-xl font-bold">Order: {order?.orderId}</h1>
         <p className="text-sm text-gray-500">
-          Placed: {format(new Date(order.createdAt), "MMM d, yyyy h:mm a")}
+          Placed: {format(new Date(order?.createdAt), "MMM d, yyyy h:mm a")}
         </p>
       </div>
 
@@ -79,7 +79,7 @@ export default function OrderDetailsCard({
           <h2 className="text-lg font-bold mb-4">Order Summary</h2>
           <div className="border-t border-dashed border-[#708dbf] my-4" />
           <div className="h-[200px] space-y-4 overflow-y-scroll">
-            {order.items.map((item, idx: number) => (
+            {order?.items.map((item, idx: number) => (
               <div key={idx}>
                 <div className="flex items-center gap-4">
                   <Image
