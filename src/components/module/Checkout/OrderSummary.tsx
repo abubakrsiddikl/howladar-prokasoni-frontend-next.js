@@ -2,10 +2,12 @@ export default function OrderSummary({
   subtotal,
   deliveryCharge,
   total,
+  totalDiscount,
 }: {
   subtotal: number;
   deliveryCharge: number;
   total: number;
+  totalDiscount: number;
 }) {
   return (
     <div className="bg-white p-5 rounded shadow">
@@ -16,10 +18,8 @@ export default function OrderSummary({
           <span> {subtotal} Tk.</span>
         </div>
         <div className="flex justify-between">
-          <span>Discount </span>
-          <span>
-            0 Tk.
-          </span>
+          <span>Total Discount </span>
+          <span>{totalDiscount.toFixed()} Tk.</span>
         </div>
         <div className="flex justify-between">
           <span>Delivery Charge</span>

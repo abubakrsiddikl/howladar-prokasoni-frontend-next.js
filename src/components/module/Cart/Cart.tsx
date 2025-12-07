@@ -1,7 +1,8 @@
-"use client"
+"use client";
 import useCart from "@/hooks/useCart";
 import Link from "next/link";
 import CartItemCard from "./CartItemCard";
+
 
 export default function Cart() {
   const { cart, clearCart } = useCart();

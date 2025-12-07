@@ -43,7 +43,8 @@ export default function ShippingForm() {
   );
 
   const totalDiscountedPrice = cart.reduce(
-    (sum: number, item) => sum + (item.book.discountedPrice || 0),
+    (sum: number, item) =>
+      sum + (item.book.discountedPrice || 0) * item.quantity,
     0
   );
 
@@ -51,8 +52,9 @@ export default function ShippingForm() {
     (sum: number, item) => sum + item.book.price * item.quantity,
     0
   );
+
   const deliveryCharge = 120;
-  const totalAmount = subtotal + deliveryCharge - totalDiscountedPrice;
+  const totalAmount = subtotal + deliveryCharge;
 
   const handleDivisionChange = (value: string) => {
     setDivision(value);
@@ -61,13 +63,12 @@ export default function ShippingForm() {
   const handleDistrictChange = (value: string) => {
     setDistrict(value);
   };
-  console.log(state);
 
   useEffect(() => {
     if (state?.success && state.paymentUrl) {
       toast.info("SSLCommerz to redirect");
       clearCart();
-      
+
       window.location.href = state.paymentUrl;
     } else if (state?.success) {
       toast.success(state.message || "Order created successfully!");
@@ -257,6 +258,7 @@ export default function ShippingForm() {
         subtotal={subtotal}
         deliveryCharge={deliveryCharge}
         total={totalAmount}
+        totalDiscount={totalDiscountedPrice}
       />
     </div>
   );

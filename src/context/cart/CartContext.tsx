@@ -13,8 +13,6 @@ import { apiRequest } from "@/services/apiClient";
 import { getUserProfile } from "@/services/Auth/auth.api";
 import { ICartItem } from "@/types";
 
-
-
 interface CartContextType {
   cart: ICartItem[];
   addToCart: (item: ICartItem) => Promise<void>;
@@ -28,7 +26,7 @@ export const CartContext = createContext<CartContextType | null>(null);
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<any>(null);
   const [cart, setCart] = useState<ICartItem[]>([]);
-
+  console.log("user",user)
   // Load user
   useEffect(() => {
     let active = true;
@@ -54,13 +52,28 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       if (user) {
         const res = await apiRequest<ICartItem[]>(`/cart/my-cart`);
         setCart(res.data || []);
+        localStorage.removeItem("cart");
       } else {
         const saved = localStorage.getItem("cart");
-        if (saved) setCart(JSON.parse(saved));
+        if (saved) {
+          setCart(JSON.parse(saved));
+        } else {
+          setCart([]);
+        }
       }
     };
-
     loadCart();
+  }, [user]);
+
+  const fetchServerCart = useCallback(async () => {
+    if (user) {
+      try {
+        const res = await apiRequest<ICartItem[]>(`/cart/my-cart`);
+        setCart(res.data || []);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }, [user]);
 
   // Save guest cart
@@ -86,18 +99,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
             quantity: item.quantity,
           }),
         });
-
-        setCart((prev) => {
-          const exists = prev.find((i) => i.book._id === item.book._id);
-          if (exists) {
-            return prev.map((i) =>
-              i.book._id === item.book._id
-                ? { ...i, quantity: i.quantity + item.quantity }
-                : i
-            );
-          }
-          return [...prev, item];
-        });
+        await fetchServerCart();
       } else {
         saveLocalCart((prev) => {
           const exists = prev.find((i) => i.book._id === item.book._id);
@@ -112,7 +114,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         });
       }
     },
-    [user, saveLocalCart]
+    [user, saveLocalCart, fetchServerCart]
   );
 
   // Remove

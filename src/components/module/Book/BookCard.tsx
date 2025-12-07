@@ -24,7 +24,7 @@ export default function BookCard({
       quantity: 1,
       book: {
         _id,
-        coverImage,
+        coverImage: coverImage ?? "",
         price,
         title,
       },
@@ -37,14 +37,14 @@ export default function BookCard({
         {/* image wrapper */}
         <div className="relative w-full h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80">
           <Image
-            src={coverImage}
+            src={coverImage as string}
             alt={title}
             fill
             className="pt-1 px-1 sm:px-2 sm:pt-2 w-full h-full object-contain"
           />
 
           {/* discount sticker */}
-          {discount > 0 && (
+          {discount! > 0 && (
             <div className="absolute top-2 left-3 sm:left-3 md:left-3 bg-red-600 text-white text-xs sm:text-sm md:text-sm font-bold px-2 rounded-full shadow-lg tracking-wider">
               {discount}%<br /> OFF
             </div>
@@ -65,10 +65,10 @@ export default function BookCard({
 
           {/* price section */}
           <div className="flex items-center gap-2 mt-1">
-            {discount > 0 ? (
+            {discount! > 0 ? (
               <>
                 <p className="text-gray-400 line-through text-xs sm:text-sm md:text-sm lg:text-base">
-                  ৳ {price + discountedPrice}
+                  ৳ {price + discountedPrice!}
                 </p>
                 <p className="text-[#FF8600] font-semibold text-sm sm:text-base md:text-lg lg:text-xl">
                   ৳ {price}

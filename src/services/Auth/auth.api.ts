@@ -111,6 +111,7 @@ export const loginUser = async (
 export const logoutUser = async () => {
   await deleteCookie("accessToken");
   redirect("/login?loggedOut=true");
+
 };
 
 // get user profile
