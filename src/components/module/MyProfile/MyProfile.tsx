@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { updateMyProfile } from "@/services/Auth/auth.api";
 import { IUser } from "@/types";
 
 import { Camera, Loader2, Save } from "lucide-react";
@@ -15,12 +16,11 @@ interface MyProfileProps {
 }
 
 const MyProfile = ({ userInfo }: MyProfileProps) => {
-  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-
+  const router = useRouter();
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -36,18 +36,18 @@ const MyProfile = ({ userInfo }: MyProfileProps) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
-
+    console.log(e.currentTarget);
     const formData = new FormData(e.currentTarget);
 
     startTransition(async () => {
-      // const result = await updateMyProfile(formData);
-      // if (result.success) {
-      //   setSuccess(result.message);
-      //   setPreviewImage(null);
-      //   router.refresh();
-      // } else {
-      //   setError(result.message);
-      // }
+      const result = await updateMyProfile(userInfo._id, formData);
+      if (result.success) {
+        setSuccess(result.message);
+        setPreviewImage(null);
+        router.refresh();
+      } else {
+        setError(result.message);
+      }
     });
   };
 

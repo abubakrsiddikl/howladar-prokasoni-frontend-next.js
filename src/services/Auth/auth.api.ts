@@ -11,6 +11,7 @@ import {
   isValidRedirectForRole,
 } from "@/utils/auth-utils";
 import { redirect } from "next/navigation";
+import { revalidateTag } from "next/cache";
 
 // register api
 export const registerUser = async (
@@ -111,13 +112,45 @@ export const loginUser = async (
 export const logoutUser = async () => {
   await deleteCookie("accessToken");
   redirect("/login?loggedOut=true");
-
 };
 
 // get user profile
 export const getUserProfile = async (): Promise<IUser> => {
   const res = await apiRequest<IUser>("/user/me", {
+    cache: "force-cache",
+    next: { tags: ["user-info"] },
     method: "GET",
   });
   return res.data;
 };
+
+// update user profile
+export async function updateMyProfile(id:string,formData: FormData) {
+  // Create a new FormData with the data property
+  const uploadFormData = new FormData();
+ 
+  // Get all form fields except the file
+  const data: any = {};
+  formData.forEach((value, key) => {
+    if (key !== "file" && value) {
+      data[key] = value;
+    }
+  });
+
+  // Add the data as JSON string
+  uploadFormData.append("data", JSON.stringify(data));
+
+  // Add the file if it exists
+  const file = formData.get("file");
+  if (file && file instanceof File && file.size > 0) {
+    uploadFormData.append("file", file);
+  }
+
+  const result = await apiRequest(`/user/update/${id}`, {
+    method: "PATCH",
+    body: uploadFormData,
+  });
+
+  revalidateTag("user-info", { expire: 0 });
+  return result;
+}

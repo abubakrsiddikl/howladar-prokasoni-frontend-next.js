@@ -23,3 +23,28 @@ export interface IMonthlyStats {
   totalOrders: number;
   totalRevenue: number;
 }
+
+export interface IOrderStatusCount {
+  status:
+    | "Processing"
+    | "Approved"
+    | "Shipped"
+    | "Delivered"
+    | "Cancelled"
+    | "Returned";
+  count: number;
+}
+
+export interface ILastOrder {
+  orderId: string;
+  status: string;
+  amount: number;
+  date: string;
+}
+
+export interface ICustomerDashboardStats {
+  totalOrders: number;
+  orderStatusStats: IOrderStatusCount[];
+  lastOrder: ILastOrder | null;
+  totalLifetimeSpend: number;
+}
