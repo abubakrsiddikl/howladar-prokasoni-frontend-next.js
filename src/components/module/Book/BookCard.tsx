@@ -27,6 +27,8 @@ export default function BookCard({
         coverImage: coverImage ?? "",
         price,
         title,
+        discount,
+        discountedPrice,
       },
     });
   };
@@ -60,7 +62,7 @@ export default function BookCard({
           </Link>
 
           <p className="text-gray-500 text-xs sm:text-sm md:text-sm lg:text-base line-clamp-1">
-            by {author}
+            by {author?.name}
           </p>
 
           {/* price section */}

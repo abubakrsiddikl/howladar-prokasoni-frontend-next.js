@@ -1,7 +1,10 @@
 export interface IBook {
   _id: string;
   title: string;
-  author: string;
+  author: {
+    _id: string;
+    name: string;
+  };
   price: number;
   stock: number;
   genre: {

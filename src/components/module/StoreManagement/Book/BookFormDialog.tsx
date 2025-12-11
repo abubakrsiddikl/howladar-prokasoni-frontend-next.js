@@ -1,4 +1,4 @@
-import { IBook, IGenre } from "@/types";
+import { IAuthor, IBook, IGenre } from "@/types";
 import { useActionState, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -31,6 +31,7 @@ interface IBookFormDialogProps {
   onSuccess: () => void;
   book?: IBook;
   genres?: IGenre[];
+  author?: IAuthor[];
 }
 
 const BookFormDialog = ({
@@ -39,6 +40,7 @@ const BookFormDialog = ({
   onSuccess,
   book,
   genres,
+  author,
 }: IBookFormDialogProps) => {
   const isEdit = !!book;
   const [state, formAction, pending] = useActionState(
@@ -47,7 +49,25 @@ const BookFormDialog = ({
   );
   const [image, setImage] = useState<File | null>(null);
   const [images, setImages] = useState<(File | FileMetadata)[] | []>([]);
-  const [selectedGenreId, setSelectedGenreId] = useState<string | null>(null);
+  // const [selectedGenreId, setSelectedGenreId] = useState<string | null>(() => {
+  //   if (!isEdit || !book) return null;
+
+  //   return typeof book.genre === "object" && book.genre !== null
+  //     ? (book.genre as IAuthor)._id
+  //     : book.genre;
+  // });
+  // selected author Id
+  // const [selectedAuthorId, setSelectedAuthorId] = useState<string | null>(
+  //   () => {
+  //     if (!isEdit || !book) return null;
+
+  //     return typeof book.author === "object" && book.author !== null
+  //       ? (book.author as IAuthor)._id
+  //       : book.author;
+  //   }
+  // );
+const [selectedGenreId, setSelectedGenreId] = useState<string>("");
+const [selectedAuthorId, setSelectedAuthorId] = useState<string>("");
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -56,10 +76,39 @@ const BookFormDialog = ({
     label: item.name,
   }));
 
+  const authorsOptions = author?.map((item) => ({
+    value: item._id,
+    label: item.name,
+  }));
+
   const handleClose = () => {
     onClose(); // Close dialog
   };
-  
+  useEffect(() => {
+  if (isEdit && book) {
+    // Genre ID
+    if (book.genre) {
+      const genreId =
+        typeof book.genre === "object"
+          ? book.genre._id
+          : book.genre;
+
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSelectedGenreId(genreId);
+    }
+
+    // Author ID
+    if (book.author) {
+      const authorId =
+        typeof book.author === "object"
+          ? book.author._id
+          : book.author;
+
+      setSelectedAuthorId(authorId);
+    }
+  }
+}, [book, isEdit]);
+
 
   // form state handle
   useEffect(() => {
@@ -79,6 +128,9 @@ const BookFormDialog = ({
   const handleSubmit = (formData: FormData) => {
     if (selectedGenreId) {
       formData.append("genre", selectedGenreId);
+    }
+    if (selectedAuthorId) {
+      formData.append("author", selectedAuthorId);
     }
     if (image) {
       formData.append("coverImage", image);
@@ -118,12 +170,23 @@ const BookFormDialog = ({
             {/* Author */}
             <Field>
               <FieldLabel htmlFor="author">Author</FieldLabel>
-              <Input
-                id="author"
-                name="author"
-                placeholder="Enter author name"
-                defaultValue={book?.author || ""}
-              />
+              <Select
+                onValueChange={setSelectedAuthorId}
+                value={selectedAuthorId || ""}
+              >
+                <SelectTrigger id="author">
+                  <SelectValue placeholder="Choose genre" />
+                </SelectTrigger>
+
+                <SelectContent>
+                  {authorsOptions?.map((item) => (
+                    <SelectItem key={item.value} value={item.value as string}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
               <InputFieldError field="author" state={state} />
             </Field>
 

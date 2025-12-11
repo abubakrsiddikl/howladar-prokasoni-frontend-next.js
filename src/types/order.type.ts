@@ -51,3 +51,11 @@ export interface IOrderStats {
   shipped: number;
   cancelled: number;
 }
+
+export interface OrderTraceState {
+  success: boolean;
+  message: string;
+  data?: IOrder; // অর্ডারের তথ্য
+  errors?: Record<string, string[]> | null;
+  timestamp: number;
+}

@@ -1,13 +1,20 @@
 import GenreWiseAllBooks from "@/components/module/Book/GenreWiseBook/GenreWiseAllBooks";
 import TablePagination from "@/components/shared/Management/TablePagination";
 import { getAllBooks } from "@/services/Book/book.api";
-import React from "react";
 
-export default async function MoreBooksPage(props: {
+interface ICategoryDetailsPageProps {
   params: Promise<{ genre: string }>;
-}) {
-  const { genre } = await props.params;
-  const books = await getAllBooks(`genre=${genre}`);
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export default async function MoreBooksPage({
+  params,
+  searchParams,
+}: ICategoryDetailsPageProps) {
+  const { genre } = await params;
+  const { limit, page } = await searchParams;
+
+  const books = await getAllBooks(`genre=${genre}&page=${page}&limit=${limit}`);
 
   return (
     <div className="space-y-4">

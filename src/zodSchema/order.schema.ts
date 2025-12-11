@@ -32,3 +32,18 @@ export const shippingInfoSchema = z.object({
 export const paymentMethodSchema = z.object({
     paymentMethod: z.enum(["COD", "SSLCommerz"]),
 });
+
+
+
+
+
+export const orderTraceSchema = z.object({
+  // Order ID সাধারণত একটি নির্দিষ্ট স্ট্রিং লেন্থ বা প্যাটার্ন অনুসরণ করে
+  orderId: z
+    .string()
+    .min(5, "অর্ডার নম্বর কমপক্ষে ৫ অক্ষরের হতে হবে।")
+    .max(30, "অর্ডার নম্বরটি খুবই বড়।")
+    .trim(),
+});
+
+export type IOrderTracePayload = z.infer<typeof orderTraceSchema>;

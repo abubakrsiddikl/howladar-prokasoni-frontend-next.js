@@ -7,7 +7,7 @@ export default function PublicLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-screen space-y-6">
+    <div className="min-h-screen space-y-6 bg-[#eeeeee]">
       <Navbar></Navbar>
       {children}
       <Footer></Footer>

@@ -23,7 +23,7 @@ export async function GenreSection({ genre }: { genre: IGenre }) {
             </p>
           </div>
 
-          <Link href={`/more-books/${genre.name}`} className="text-[#ff8600]">
+          <Link href={`/category/${genre.slug}`} className="text-[#ff8600]">
             See all {">"}
           </Link>
         </div>

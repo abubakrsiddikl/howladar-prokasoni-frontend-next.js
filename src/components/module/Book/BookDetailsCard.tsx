@@ -7,6 +7,7 @@ import { useState } from "react";
 import PreviewGalleryDialog from "./PreviewGalleryDialog";
 import BookCard from "./BookCard";
 import { Button } from "@/components/ui/button";
+import useCart from "@/hooks/useCart";
 
 interface BookDetailsCardProps {
   book: IBook;
@@ -18,7 +19,21 @@ export default function BookDetailsCard({
   similarBooks = [],
 }: BookDetailsCardProps) {
   const [open, setOpen] = useState(false);
-  const handleAddToCart = () => {};
+  const { addToCart } = useCart();
+  const handleAddToCart = () => {
+    addToCart({
+      quantity: 1,
+      book: {
+        _id: book._id,
+        coverImage: book.coverImage ?? "",
+        price: book.price,
+        title: book.title,
+        discount: book.discount,
+        discountedPrice: book.discountedPrice,
+      },
+    });
+  };
+
   // previewImages gallery setup
   const galleryItems =
     book.previewImages?.map((img) => ({
@@ -31,7 +46,7 @@ export default function BookDetailsCard({
       <Card className="shadow-lg rounded-2xl overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Book Cover */}
-          <div className="relative col-span-1 ">
+          <div className="relative col-span-1 w-full h-[400px]">
             <Image
               src={book.coverImage!}
               alt={book.title}
@@ -52,7 +67,9 @@ export default function BookDetailsCard({
 
               <p className="text-gray-600 mb-2">
                 by{" "}
-                <span className="font-medium text-blue-400">{book.author}</span>
+                <span className="font-medium text-blue-400">
+                  {book?.author?.name}
+                </span>
               </p>
 
               {book.description && (
@@ -87,7 +104,7 @@ export default function BookDetailsCard({
 
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3 mt-4">
-              <Button className="flex-1" onClick={handleAddToCart}>
+              <Button className="flex-1 text-white" onClick={handleAddToCart}>
                 🛒 Add to Cart
               </Button>
               <Button

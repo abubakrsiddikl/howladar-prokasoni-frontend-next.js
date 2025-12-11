@@ -3,18 +3,11 @@
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import BookFormDialog from "./BookFormDialog";
-import ManagementPageHeader from "@/components/shared/Management/ManagementPageHeader";
-import { IAuthor, IGenre } from "@/types";
 
-interface BooksManagementHeaderProps {
-  genres: IGenre[];
-  authors: IAuthor[];
-}
-const BooksManagementHeader = ({
-  genres,
-  authors,
-}: BooksManagementHeaderProps) => {
+import ManagementPageHeader from "@/components/shared/Management/ManagementPageHeader";
+import AuthorFormDialog from "./AuthorFormDialog";
+
+const AuthorManagementHeader = () => {
   const router = useRouter();
   const [, startTransition] = useTransition();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -37,20 +30,18 @@ const BooksManagementHeader = ({
   };
   return (
     <>
-      <BookFormDialog
+      <AuthorFormDialog
         key={dialogKey}
         open={isDialogOpen}
         onClose={handleCloseDialog}
         onSuccess={handleSuccess}
-        genres={genres}
-        author={authors}
       />
 
       <ManagementPageHeader
-        title="Books Management"
-        description="Manage Book information and details"
+        title="Authors Management"
+        description="Manage Author information and details"
         action={{
-          label: "Add Book    ",
+          label: "Add Author    ",
           icon: Plus,
           onClick: handleOpenDialog,
         }}
@@ -59,4 +50,4 @@ const BooksManagementHeader = ({
   );
 };
 
-export default BooksManagementHeader;
+export default AuthorManagementHeader;

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ICartItem, IResponse } from "@/types";
-import { IOrder } from "@/types/order.type";
+import { IOrder, OrderTraceState } from "@/types/order.type";
 import { apiRequest } from "../apiClient";
 import { zodValidator } from "@/lib/zodValidator";
 import {
@@ -34,6 +34,51 @@ export const getSingleOrder = async (
 ): Promise<IResponse<IOrder>> => {
   const res = apiRequest<IOrder>(`/order/${orderId}`);
   return res;
+};
+
+export const getOrderTraceInfo = async (orderId: string) => {
+  const result = await apiRequest(`/order/${orderId}/trace`);
+  return result;
+};
+
+export const traceOrder = async (
+  _prevState: any,
+  formData: FormData
+): Promise<OrderTraceState> => {
+  const validationPayload = {
+    orderId: formData.get("orderId"),
+  };
+
+  try {
+    const orderTraceResult = await getOrderTraceInfo(
+      validationPayload.orderId as string
+    );
+
+    if (!orderTraceResult || orderTraceResult.success === false) {
+      return {
+        success: false,
+        message:
+          orderTraceResult?.message ||
+          "এই অর্ডার নম্বরটির কোনো তথ্য খুঁজে পাওয়া যায়নি।",
+        timestamp: Date.now(),
+      };
+    }
+
+    return {
+      success: true,
+      message: "অর্ডারের তথ্য সফলভাবে পাওয়া গেছে।",
+      data: orderTraceResult.data as IOrder,
+      timestamp: Date.now(),
+    };
+  } catch (error) {
+    console.error("Order Trace API Error:", error);
+
+    return {
+      success: false,
+      message: "সার্ভারে যোগাযোগে সমস্যা হয়েছে। পরে আবার চেষ্টা করুন।",
+      timestamp: Date.now(),
+    };
+  }
 };
 
 // update order status

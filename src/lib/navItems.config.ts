@@ -43,25 +43,31 @@ export const storeManagerNavItems: NavSection[] = [
     items: [
       {
         title: "Add New Book",
-        href: "/store-manager/dashboard/book",
+        href: "/store-manager/dashboard/book-management",
         icon: "Plus",
         roles: ["STORE_MANAGER", "ADMIN"],
       },
       {
         title: "Add Book Category",
-        href: "/store-manager/dashboard/genre",
+        href: "/store-manager/dashboard/genre-management",
         icon: "Layers",
         roles: ["STORE_MANAGER", "ADMIN"],
       },
       {
+        title: "Add Author",
+        href: "/store-manager/dashboard/author-management",
+        icon: "UserPen",
+        roles: ["STORE_MANAGER", "ADMIN"],
+      },
+      {
         title: "All Orders",
-        href: "/store-manager/dashboard/orders",
+        href: "/store-manager/dashboard/orders-management",
         icon: "ShoppingCart",
         roles: ["STORE_MANAGER", "ADMIN"],
       },
       {
         title: "Add Banner",
-        href: "/store-manager/dashboard/banner",
+        href: "/store-manager/dashboard/banner-management",
         icon: "ImagePlus",
         roles: ["STORE_MANAGER", "ADMIN"],
       },

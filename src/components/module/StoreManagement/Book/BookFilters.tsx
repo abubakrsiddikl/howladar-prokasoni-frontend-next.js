@@ -21,7 +21,7 @@ const BookFilters = ({ genres }: BooksFilterProps) => {
 
       {/* Row 2: Filter Controls - All on same line */}
       <div className="flex items-center gap-3 flex-wrap">
-        {/* Specialties Multi-Select */}
+        {/*  Multi-Select */}
         <MultiSelectFilter
           paramName="genre"
           options={genres.map((genre) => ({

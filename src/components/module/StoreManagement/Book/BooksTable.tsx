@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 
-import { IBook, IGenre } from "@/types";
+import { IAuthor, IBook, IGenre } from "@/types";
 import { deleteBook } from "@/services/Book/book.api";
 import ManagementTable from "@/components/shared/Management/ManagementTable";
 import BookFormDialog from "./BookFormDialog";
@@ -14,9 +14,10 @@ import { booksColumns } from "./booksColumns";
 interface BooksTableProps {
   books: IBook[];
   genres: IGenre[];
+  authors: IAuthor[];
 }
 
-const BooksTable = ({ books, genres }: BooksTableProps) => {
+const BooksTable = ({ books, genres, authors }: BooksTableProps) => {
   const router = useRouter();
   const [, startTransition] = useTransition();
   const [deletingBook, setDeletingBook] = useState<IBook | null>(null);
@@ -75,6 +76,7 @@ const BooksTable = ({ books, genres }: BooksTableProps) => {
         onClose={() => setEditingBook(null)}
         book={editingBook!}
         genres={genres}
+        author={authors}
         onSuccess={() => {
           setEditingBook(null);
           handleRefresh();

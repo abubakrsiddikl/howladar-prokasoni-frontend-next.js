@@ -33,7 +33,7 @@ export const booksColumns: Column<IBook>[] = [
   },
   {
     header: "Author",
-    accessor: "author",
+    accessor: (row: IBook) => row.author?.name || "N/A",
     className: "p-2",
   },
   {

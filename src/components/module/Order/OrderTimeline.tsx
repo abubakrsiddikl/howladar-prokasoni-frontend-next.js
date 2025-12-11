@@ -23,7 +23,7 @@ export default function OrderTimeline({ order }: Props) {
             <li key={idx} className="relative flex gap-3 mb-6">
               {/* Timeline line */}
               {!isLast && (
-                <span className="absolute left-3 top-6  h-full bg-[#ff8600]"></span>
+                <span className="absolute left-3 top-6 w-0.5  h-full bg-[#ff8600]"></span>
               )}
 
               {/* Circle */}

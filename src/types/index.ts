@@ -3,9 +3,10 @@ export * from "./genre.type";
 export * from "./auth.type";
 export * from "./cart.type";
 export * from "./dashboard.type";
-export * from "./banner.type"
-export * from "./order.type"
-export * from "./stats.type"
+export * from "./banner.type";
+export * from "./order.type";
+export * from "./stats.type";
+export * from "./author.type";
 
 export interface TMeta {
   total: number;
