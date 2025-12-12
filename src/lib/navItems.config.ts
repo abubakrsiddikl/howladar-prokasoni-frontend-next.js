@@ -19,6 +19,12 @@ export const getCommonNavItems = (role: TRole): NavSection[] => {
           icon: "User",
           roles: ["ADMIN", "STORE_MANAGER", "CUSTOMER"],
         },
+        {
+          title: "Home",
+          href: `/`,
+          icon: "Home",
+          roles: ["ADMIN", "STORE_MANAGER", "CUSTOMER"],
+        },
       ],
     },
   ];

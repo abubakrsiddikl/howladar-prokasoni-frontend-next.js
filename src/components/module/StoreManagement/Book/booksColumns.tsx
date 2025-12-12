@@ -22,7 +22,7 @@ export const booksColumns: Column<IBook>[] = [
     header: "Title",
     accessor: (row: IBook) => (
       <Link
-        href={`/book-details/${row.slug}`}
+        href={`/book/${row.slug}`}
         className="hover:text-blue-700 hover:underline font-medium"
       >
         {row.title}

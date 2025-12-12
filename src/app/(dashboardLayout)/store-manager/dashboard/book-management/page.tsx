@@ -17,7 +17,7 @@ export default async function BookManagementPage({
   const searchParamsObj = await searchParams;
   const queryString = queryStringFormatter(searchParamsObj);
 
-  const genres = await getAllGenres();
+  const genres = await getAllGenres("limit=200");
   const books = await getAllBooks(queryString);
   const authors = await getAllAuthors();
   return (

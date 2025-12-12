@@ -1,13 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use server";
 import { IGenre, IResponse } from "@/types";
 import { apiRequest } from "../apiClient";
 import { zodValidator } from "@/lib/zodValidator";
 import { genreSchema } from "@/zodSchema/genre.schema";
 
+
 export const getAllGenres = async (
   queryString?: string
 ): Promise<IResponse<IGenre[]>> => {
   const res = await apiRequest<IGenre[]>(`/genre?${queryString ?? ""}`);
+  return res;
+};
+
+// get sorted genre by book count
+export const getAllSortedGenre = async (): Promise<IResponse<IGenre[]>> => {
+  const res = await apiRequest<IGenre[]>(`/genre/sorted`);
   return res;
 };
 
@@ -38,16 +46,17 @@ export const createGenre = async (
       formData: validationPayload,
     };
   }
-  const result = apiRequest("/genre/create", {
+  const result = await apiRequest("/genre/create", {
     method: "POST",
     body: JSON.stringify(validatedPayload.data),
   });
+
   return result;
 };
 
 // delete genre
 export const deleteGenre = async (id: string) => {
-  const result = apiRequest(`/genre/${id}`, {
+  const result = await apiRequest(`/genre/${id}`, {
     method: "DELETE",
   });
   return result;

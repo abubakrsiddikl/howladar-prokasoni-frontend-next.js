@@ -6,6 +6,7 @@ import type { IBook } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
+
 export default function BookCard({
   _id,
   title,
@@ -55,7 +56,7 @@ export default function BookCard({
 
         {/* card info */}
         <div className="py-2 pl-3 sm:pl-4 md:pl-6">
-          <Link href={`/book-details/${slug}`}>
+          <Link href={`/book/${slug}`}>
             <h3 className="text-sm sm:text-base md:text-base lg:text-lg font-semibold hover:text-[#FF8600] line-clamp-1 mt-2">
               {title}
             </h3>

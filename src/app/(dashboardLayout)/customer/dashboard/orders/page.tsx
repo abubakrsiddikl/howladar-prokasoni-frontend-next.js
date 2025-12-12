@@ -14,6 +14,7 @@ export default async function CustomerOrderPage({
   const queryString = queryStringFormatter(searchParamsObj);
   const user = await getUserProfile();
   const orders = await getCustomerOrders(queryString);
+  
   return (
     <div>
       <Suspense fallback={<TableSkeleton columns={10} rows={10} />}>

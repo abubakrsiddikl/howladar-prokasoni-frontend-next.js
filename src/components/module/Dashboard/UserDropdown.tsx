@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,7 +12,7 @@ import {
 import { logoutUser } from "@/services/Auth/auth.api";
 import { IUser } from "@/types";
 
-import { Settings, User } from "lucide-react";
+import { User } from "lucide-react";
 import Link from "next/link";
 import LogoutButton from "../../shared/LogoutButton";
 
@@ -51,12 +50,7 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
             Profile
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href={"/change-password"} className="cursor-pointer">
-            <Settings className="mr-2 h-4 w-4" />
-            Change Password
-          </Link>
-        </DropdownMenuItem>
+
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={handleLogout}

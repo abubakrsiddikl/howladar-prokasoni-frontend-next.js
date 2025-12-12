@@ -21,7 +21,7 @@ export default function CartItemCard({ item }: { item: ICartItem }) {
         />
         <div>
           <Link
-            href={`/book-details/${item.book?.slug}`}
+            href={`/book/${item.book?.slug}`}
             className="font-semibold text-[#1a0dab] hover:underline"
           >
             {item.book?.title}

@@ -29,7 +29,7 @@ export async function GenreSection({ genre }: { genre: IGenre }) {
         </div>
 
         {/* Carousel inside Genre Card */}
-        <GenreSwiper books={getAllBooksByGenre.data} />
+        <GenreSwiper books={getAllBooksByGenre?.data || []} />
       </CardContent>
     </Card>
   );

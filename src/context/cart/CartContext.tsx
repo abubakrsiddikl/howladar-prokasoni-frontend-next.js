@@ -26,7 +26,7 @@ export const CartContext = createContext<CartContextType | null>(null);
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<any>(null);
   const [cart, setCart] = useState<ICartItem[]>([]);
-  console.log("user",user)
+  
   // Load user
   useEffect(() => {
     let active = true;

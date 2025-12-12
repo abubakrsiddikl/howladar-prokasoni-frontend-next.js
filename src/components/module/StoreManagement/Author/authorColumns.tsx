@@ -21,7 +21,7 @@ export const authorColumns: Column<IAuthor>[] = [
     header: "Author Name",
     accessor: (row: IAuthor) => (
       <Link
-        href={`store-manager/dashboard/author-management`}
+        href={`/author/${row.slug}`}
         className="hover:text-blue-700 hover:underline font-semibold"
       >
         {row.name}

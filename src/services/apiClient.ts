@@ -13,7 +13,7 @@ export async function apiRequest<T>(
     ...(options?.body instanceof FormData
       ? {}
       : { "Content-Type": "application/json" }),
-    // ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
   try {
     const response = await fetch(`${env.baseUrl}${endpoint}`, {
@@ -26,6 +26,7 @@ export async function apiRequest<T>(
       ...options,
     });
 
+    // console.log(response.headers)
     //  Parse JSON safely
     const data = await response.json();
 
