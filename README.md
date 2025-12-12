@@ -1,298 +1,176 @@
-📘 Howladar Prokasoni – Frontend
+# 📘 Howladar Book Store – Frontend
 
-A production-ready Next.js (App Router) frontend for the Howladar Prokasoni Online Bookstore.
-The frontend integrates tightly with the backend API and includes full authentication, payments, cart system, dashboards, category & author pages, server actions, secure API routing, and a modern UI using Shadcn/UI.
+A production-ready, high-performance web client for the **Howladar Prokasoni Online Bookstore**, built on the modern **Next.js App Router** architecture. This application is designed for scalability, security, and exceptional user experience.
 
-🔗 Live Website: https://howladarporkasoni.vercel.app
+---
 
-🔗 Backend API: https://howladar-prokasoni-server.vercel.app
+## 🔗 Live Deployments
 
-📑 Table of Contents
+| Resource | URL | Description |
+| :--- | :--- | :--- |
+| **Live Website** | [https://howladarporkasoni.vercel.app](https://howladarporkasoni.vercel.app) | The live, user-facing application deployed on Vercel. |
+| **Backend API** | [https://howladar-prokasoni-server.vercel.app](https://howladar-prokasoni-server.vercel.app) | The dedicated TypeScript/Express API service. |
 
-Introduction
+---
 
-Tech Stack
+## 📑 Table of Contents
 
-Key Features
+* [Introduction](#-introduction)
+* [Tech Stack](#-tech-stack)
+* [Key Features](#-key-features)
+* [Authentication & Security](#-authentication--security)
+* [Dashboard System](#-dashboard-system)
+* [Folder Structure](#-folder-structure)
+* [Checkout & Payment Flow](#-checkout--payment-flow)
+* [API Handling](#-api-handling)
+* [State Management](#-state-management)
+* [Installation & Setup](#-installation--setup)
+* [License](#-license)
 
-Authentication Flow
+---
 
-Public Pages
+## 🧾 Introduction
 
-Dashboard Features
+This project provides a complete full-stack interface for an e-commerce platform. It leverages the **Server/Client Component** paradigm of **Next.js 14+** to achieve fast initial loading, SEO optimization, and secure data handling via server-side routing.
 
-Checkout & Payment
+It communicates securely with a TypeScript-based backend and includes features like custom JWT authentication, SSLCommerz payment integration, and comprehensive dashboards.
 
-Folder Structure
+---
 
-State Management
+## 🧰 Tech Stack
 
-API Handling
+### Core Framework
+* **Next.js (App Router):** For server-side rendering and routing.
+* **TypeScript:** For type safety and better developer experience.
+* **React:** UI library.
 
-Installation
+### Styling & UI
+* **Tailwind CSS:** Utility-first CSS framework.
+* **Shadcn/UI:** Reusable component library.
+* **Lucide React:** Icon set.
 
-Run Locally
+### Forms & Validation
+* **React Hook Form:** Efficient form handling.
+* **Zod:** Schema validation.
 
-Demo Video (optional)
+### State & Data
+* **Context API:** Global state management (Cart).
+* **Server Actions:** For secure form submissions.
 
-License
+### Security
+* **JWT:** Cookie-based authentication.
+* **HTTP-Only Cookies:** Secure storage for tokens.
+* **Middleware:** Route protection.
 
-🧾 Introduction
+---
 
-This is a complete full-stack bookstore frontend built with Next.js App Router and secure communication with a TypeScript-based backend.
+## 🌟 Key Features
 
-The frontend includes:
+### 🚀 1. Fully Responsive UI
+* Mobile-first design approach.
+* Modern, clean interface powered by **Shadcn UI**.
+* Optimized for mobile, tablet, and desktop screens.
 
-Custom JWT authentication with secure cookies
+### 🔐 2. Robust Authentication
+* Login and Registration via Server Actions.
+* Secure **HTTP-Only cookie** storage for JWT.
+* Middleware-based route protection for:
+    * `/dashboard/customer`
+    * `/dashboard/store-manager`
+    * `/dashboard/admin`
 
-Fully responsive UI using Shadcn UI
+### 🛍 3. Advanced Shopping Cart
+* Global **CartContext** for state management.
+* Add, remove, and update quantities instantly.
+* Cart data persists after login.
+* Real-time cart badge in the navigation bar.
 
-Server Actions for form handling
+### 📚 4. Book Catalog & Details
+* Comprehensive book listing with filtering and search.
+* Dynamic details page with multiple image previews.
+* Displays stock status, discounts, authors, and genres.
 
-Complete cart system
+### 🏷 5. Dynamic Category & Author Pages
+* **Public Pages:** `/categories` and `/authors` lists.
+* **Dynamic Routing:**
+    * `/category/[id]` -> Shows books for specific category.
+    * `/author/[id]` -> Shows books by specific author.
 
-Category & author based book pages
+### 🎨 6. Banner Management
+* Homepage banners managed dynamically by Admin.
+* Integrated with **Cloudinary** via the backend.
 
-Store Manager & Admin dashboards
+---
 
-SSLCommerz payment integration
+## 📊 Dashboard System
 
-Proxy-based API routing
+Three distinct dashboards tailored to specific user roles:
 
-SEO optimized dynamic metadata
+| Dashboard | User Role | Capabilities |
+| :--- | :--- | :--- |
+| **Customer** | `CUSTOMER` | View profile, track order history, view order details, manage cart. |
+| **Store Manager** | `STORE_MANAGER` | Add/Edit/Delete books, manage inventory stock, view all books. |
+| **Admin** | `ADMIN` | Manage Genres, Authors, Banners, and view comprehensive site statistics. |
 
-🧰 Tech Stack
-Frontend
+---
 
-Next.js (App Router)
+## 🧭 Folder Structure
 
-TypeScript
+The project follows a clean, modular App Router structure:
 
-Tailwind CSS
-
-Shadcn UI
-
-Server Components + Client Components
-
-React Hook Form
-
-Zod Validation
-
-Context API
-
-Next.js Server Actions
-
-Dynamic Metadata SEO
-
-Auth & Security
-
-Custom JWT cookie-based authentication
-
-HTTP-Only cookies
-
-Private & public route guards
-
-proxy.ts for secure server-side API calls
-
-🌟 Key Features
-🚀 1. Fully Responsive UI
-
-Optimized for mobile, tablet, and desktop
-
-Modern, clean UI powered by Shadcn UI
-
-🔐 2. Authentication
-
-Login / Register
-
-Logout
-
-Secure JWT cookies
-
-Middleware-based route protection
-
-User info loaded using server components
-
-Protected routes:
-
-/dashboard/customer
-
-/dashboard/store-manager
-
-/dashboard/admin
-
-🛍 3. Shopping Cart
-
-Add to cart
-
-Remove items
-
-Update quantity
-
-Global CartContext
-
-Cart persists after login
-
-Cart badge shown in navbar
-
-📚 4. Books Module
-
-Book listing
-
-Filtering
-
-Search
-
-Dynamic book details
-
-Multiple image preview
-
-Show discount, stock, genre, author, etc.
-
-🏷 5. Categories & Authors Pages
-Public Pages
-
-/categories → list all categories
-
-/authors → list all authors
-
-Dynamic Pages
-
-/category/:id → books of selected category
-
-/author/:id → books of selected author
-
-🎨 6. Banner Module
-
-Homepage banners managed by Admin
-
-Fully integrated with Cloudinary via backend
-
-🛒 7. Cart & Checkout
-
-Cart page
-
-Checkout summary
-
-Order details
-
-Order history
-
-💳 8. Payment (SSLCommerz)
-
-Payment flow:
-
-User proceeds to checkout
-
-Frontend calls /payment/init via proxy
-
-Redirects to SSLCommerz gateway
-
-On completion → success/fail/cancel pages
-
-Order details stored in dashboard
-
-Works 100% with backend SSLCommerz module.
-
-📊 9. Dashboard System
-Customer Dashboard
-
-View profile
-
-Order list
-
-Order details
-
-Manage cart
-
-Store Manager Dashboard
-
-Add books
-
-Edit books
-
-Delete books
-
-Manage stock
-
-Manage all books
-
-Admin Dashboard
-
-Manage genres
-
-Manage authors
-
-Manage banners
-
-View statistics
-
-Site control
-
-🧭 Folder Structure
-
-Based on your provided screenshot:
-
+```bash
 src/
- ├── app/
- │   ├── (commonLayout)/
- │   ├── (dashboardLayout)/
- │   ├── error.tsx
- │   ├── layout.tsx
- │   ├── not-found.tsx
- │   ├── globals.css
- │   └── favicon.ico
+ ├── app/                    # Main routing directory
+ │   ├── (commonLayout)/     # Public pages (Home, Shop, etc.)
+ │   ├── (dashboardLayout)/  # Protected dashboard routes
+ │   ├── error.tsx           # Global error handling
+ │   ├── layout.tsx          # Root layout
+ │   └── not-found.tsx       # 404 page
  │
- ├── components/
- │   ├── module/
- │   ├── shared/
- │   ├── ui/
- │   └── MultipleImageUploader.tsx
+ ├── components/             # Reusable UI components
+ │   ├── module/             # Feature-specific components
+ │   ├── shared/             # Shared components (Navbar, Footer)
+ │   └── ui/                 # Shadcn UI primitives
  │
- ├── config/
- ├── constant/
- ├── context/
- │    └── cartContext.tsx
- │
- ├── data/
- ├── hooks/
- ├── lib/
- ├── services/
- ├── types/
- ├── utils/
- ├── zodSchema/
- └── proxy.ts
+ ├── context/                # React Context providers (Cart)
+ ├── services/               # API service functions
+ ├── types/                  # TypeScript interfaces
+ ├── utils/                  # Helper functions
+ ├── zodSchema/              # Zod validation schemas
+ └── proxy.ts                # Secure API wrapper
 
-🔐 Authentication Flow (Frontend)
+🔐 Authentication Flow
+User Submission: User submits Login/Register form via Server Action.
 
-User submits login/register form (Server Action)
+Token Generation: Backend verifies credentials and issues a JWT.
 
-Backend sends JWT cookie
+Secure Storage: The token is set as a secure, HTTP-Only cookie.
 
-Cookie stored securely as HTTP-only
+Route Guard: Next.js Middleware checks this cookie to allow/deny access to protected routes.
 
-Middleware checks protected routes
-
-Unauthorized users are redirected to /login
+Redirect: Unauthorized users are automatically redirected to /login.
 
 🛍 Checkout & Payment Flow
+The payment process integrates SSLCommerz via a secure backend proxy:
 
-User checks out from cart
+Initiation: User clicks checkout from the cart.
 
-Frontend calls backend init payment
+Proxy Call: Frontend calls /payment/init via proxy.ts.
 
-Redirect to SSLCommerz
+Gateway: Backend redirects user to the SSLCommerz payment gateway.
 
-After payment → success/fail/cancel URLs
+Completion:
 
-Order stored in database
+Success: Redirects to success page, order saved in DB.
 
-User can view order in Dashboard
+Fail/Cancel: Redirects to respective error pages.
+
+History: Order details are immediately available in the User Dashboard.
 
 ⚙ API Handling (proxy.ts)
+All API calls are routed through a secure server-side utility to manage CORS and cookies effectively.
 
-All API calls are made via secure server-side routing:
-
+// Secure wrapper for API calls
 export const api = async (path: string, options: any = {}) => {
   return await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}${path}`,
@@ -300,46 +178,42 @@ export const api = async (path: string, options: any = {}) => {
   );
 };
 
-
 Benefits:
 
-No CORS issues
+Eliminates CORS issues.
 
-Secure API communication
+Ensures secure server-to-server communication.
 
-Works perfectly with cookies
+Handles cookie transmission automatically.
 
-🧠 State Management
-CartContext
+🛠 Installation & Setup
+Prerequisites
+Node.js (LTS version)
 
-Add item
+npm or yarn
 
-Remove item
-
-Update quantity
-
-Persist cart
-
-User State
-
-Loaded via secure server components
-
-Used in navbar & dashboard
-
-🛠 Installation
-git clone https://github.com/your-username/howladar-prokasoni-frontend.git
+1. Clone the Repository
+Bash
+git clone [https://github.com/your-username/howladar-prokasoni-frontend.git](https://github.com/your-username/howladar-prokasoni-frontend.git)
 cd howladar-prokasoni-frontend
+2. Install Dependencies
+Bash
 npm install
+3. Environment Variables
+Create a .env.local file in the root directory:
 
-▶ Run Locally
+Code snippet
+# URL of your deployed backend
+NEXT_PUBLIC_BACKEND_URL=[https://howladar-prokasoni-server.vercel.app/api/v1](https://howladar-prokasoni-server.vercel.app/api/v1)
+4. Run Locally
+Bash
 npm run dev
+The app will be available at http://localhost:3000.
 
 🎥 Demo Video (Optional)
+You can watch the full project walkthrough here:
 
-You can add your video later:
-
-[Watch Demo Video](YOUR_VIDEO_LINK_HERE)
+Watch Demo Video
 
 📄 License
-
 This project is licensed under the MIT License.
