@@ -30,6 +30,7 @@ export default function OrderDetailsCard({
     updateOrderStatus.bind(null, order._id),
     null
   );
+
   const [, startTransition] = useTransition();
   const router = useRouter();
   const [orderStatus, setOrderStatus] = useState(order.currentStatus);
@@ -46,7 +47,27 @@ export default function OrderDetailsCard({
       router.refresh();
     });
   }, [state, router]);
-    
+  const handlePrintInvoice = async (url: string) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+
+      const blobUrl = URL.createObjectURL(blob);
+
+      const newTab = window.open(blobUrl, "_blank");
+
+      if (newTab) {
+        newTab.onload = () => {
+          newTab.print();
+          URL.revokeObjectURL(blobUrl);
+        };
+      }
+    } catch (error) {
+      console.error("Print failed", error);
+      window.open(url, "_blank");
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-6 space-y-6">
       {/* Banner */}
@@ -202,11 +223,15 @@ export default function OrderDetailsCard({
 
       {/* Action Button */}
       <div className="text-center">
-        <Button variant="outline">
-          {order.currentStatus === "Cancelled"
-            ? "Go Shopping"
-            : "Download Invoice"}
-        </Button>
+        {order.invoiceURL && (
+          <Button
+            variant="outline"
+            className="cursor-pointer"
+            onClick={() => handlePrintInvoice(order.invoiceURL)}
+          >
+            Download Invoice
+          </Button>
+        )}
       </div>
     </div>
   );

@@ -53,7 +53,16 @@ export default function ShippingForm() {
     0
   );
 
-  const deliveryCharge = 120;
+  // calculate deliveryCharge
+  let deliveryCharge = 0;
+  
+  if (selectedDistrict === "ঢাকা") {
+    
+    deliveryCharge = 60;
+  } else if (selectedDistrict) {
+    
+    deliveryCharge = 120;
+  }
   const totalAmount = subtotal + deliveryCharge;
 
   const handleDivisionChange = (value: string) => {

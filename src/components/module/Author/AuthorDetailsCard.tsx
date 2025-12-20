@@ -11,7 +11,7 @@ const AuthorDetailsCard = ({ author }: { author: IAuthor }) => {
   const totalBooks = author.books?.length;
 
   return (
-    <div className="w-11/12 mx-auto p-4 md:p-6  min-h-screen">
+    <div className="w-11/12 mx-auto  min-h-screen">
       {/* 1. 🖼️ Header and Bio Section */}
       {author.bio && (
         <div className=" p-4 rounded-lg border bg-white mb-8 flex flex-col md:flex-row items-start space-x-6">
@@ -19,7 +19,7 @@ const AuthorDetailsCard = ({ author }: { author: IAuthor }) => {
           <div className="flex flex-col items-center">
             <div className="relative  mb-4">
               <Image
-                src={author.profileImage || "/writer.png"}
+                src={author.profileImage || "/author-i.png"}
                 alt={author.name}
                 width={80}
                 height={80}
@@ -62,7 +62,7 @@ const AuthorDetailsCard = ({ author }: { author: IAuthor }) => {
         </div>
 
         {/* 3. 📚 Books Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6 gap-4">
           {author?.books?.map((book) => (
             <BookCard key={book._id} {...book} />
           ))}

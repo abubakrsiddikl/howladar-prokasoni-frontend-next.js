@@ -1,5 +1,5 @@
 "use client";
-import { Home, ListChecks, Pencil, ShoppingCart, Menu } from "lucide-react";
+import { Home, ListChecks, Pencil, ShoppingCart, Menu, Truck } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Sheet,
@@ -96,6 +96,8 @@ export default function NavbarComponent({
 
                     {/* 9. এপ্রন */}
                     {/* <DrawerItem href="#" label="এপ্রন" Icon={Shirt} />  */}
+                    {/* track order */}
+                    <DrawerItem href="/order/trace" label="অর্ডার ট্র্যাক" Icon={Truck} /> 
 
                     {/* 10. কার্ট */}
                     <DrawerItem

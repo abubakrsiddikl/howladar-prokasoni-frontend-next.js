@@ -8,7 +8,7 @@ A production-ready, high-performance web client for the **Howladar Prokasoni Onl
 
 | Resource | URL | Description |
 | :--- | :--- | :--- |
-| **Live Website** | [https://howladarporkasoni.vercel.app](https://howladarporkasoni.vercel.app) | The live, user-facing application deployed on Vercel. |
+| **Live Website** | [https://howladarporkasoni.com.bd](https://howladarporkasoni.com.bd) | The live, user-facing application deployed on Vercel. |
 | **Backend API** | [https://howladar-prokasoni-server.vercel.app](https://howladar-prokasoni-server.vercel.app) | The dedicated TypeScript/Express API service. |
 
 ---
@@ -75,9 +75,9 @@ It communicates securely with a TypeScript-based backend and includes features l
 * Login and Registration via Server Actions.
 * Secure **HTTP-Only cookie** storage for JWT.
 * Middleware-based route protection for:
-    * `/dashboard/customer`
-    * `/dashboard/store-manager`
-    * `/dashboard/admin`
+    * `customer/dashboard`
+    * `store-manager/dashboard`
+    * `admin/dashboard`
 
 ### 🛍 3. Advanced Shopping Cart
 * Global **CartContext** for state management.
@@ -91,7 +91,7 @@ It communicates securely with a TypeScript-based backend and includes features l
 * Displays stock status, discounts, authors, and genres.
 
 ### 🏷 5. Dynamic Category & Author Pages
-* **Public Pages:** `/categories` and `/authors` lists.
+* **Public Pages:** `/category` and `/authors` lists.
 * **Dynamic Routing:**
     * `/category/[id]` -> Shows books for specific category.
     * `/author/[id]` -> Shows books by specific author.

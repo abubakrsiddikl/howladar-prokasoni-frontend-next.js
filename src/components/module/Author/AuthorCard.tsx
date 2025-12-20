@@ -7,11 +7,11 @@ const AuthorCard = ({ author }: { author: IAuthor }) => (
     {/* Profile Image (Placeholder/Actual Image) */}
     <Link
       href={`/author/${author.slug}`}
-      className="text-base font-semibold text-[#3a8fd1] hover:text-red-400 hover:underline"
+      className="text-base font-semibold text-[#3a8fd1] hover:text-red-400 hover:underline flex flex-col justify-center items-center"
     >
-      <div className="relative h-24 w-24 mb-3">
+      <div className="relative h-24 w-24 mb-3 ">
         <Image
-          src={author.profileImage || "/writer.png"}
+          src={author.profileImage || "/author-i.png"}
           alt={author.name}
           layout="fill"
           objectFit="cover"
@@ -21,7 +21,7 @@ const AuthorCard = ({ author }: { author: IAuthor }) => (
 
       {/* Author Name */}
 
-      {author.name}
+     <p> {author.name}</p>
     </Link>
 
     {/* Subtitle/Short Bio (ঐচ্ছিক) */}

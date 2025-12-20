@@ -40,6 +40,7 @@ export interface IOrder {
   orderId: string;
   deliveryCharge: number;
   totalDiscountedPrice: number;
+  invoiceURL: string;
   createdAt: string;
   updatedAt: string;
 }

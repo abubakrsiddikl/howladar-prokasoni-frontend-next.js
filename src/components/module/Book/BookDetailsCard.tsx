@@ -8,6 +8,7 @@ import PreviewGalleryDialog from "./PreviewGalleryDialog";
 import BookCard from "./BookCard";
 import { Button } from "@/components/ui/button";
 import useCart from "@/hooks/useCart";
+import Link from "next/link";
 
 interface BookDetailsCardProps {
   book: IBook;
@@ -67,9 +68,12 @@ export default function BookDetailsCard({
 
               <p className="text-gray-600 mb-2">
                 by{" "}
-                <span className="font-medium text-blue-400">
+                <Link
+                  href={`/author/${book?.author?.slug}`}
+                  className="font-medium text-blue-400 hover:underline"
+                >
                   {book?.author?.name}
-                </span>
+                </Link>
               </p>
 
               {book.description && (

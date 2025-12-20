@@ -18,7 +18,7 @@ export default function Footer() {
   // quick navigation link
   const quickLinks = [
     { name: "হোম", href: "/" },
-    { name: "বইয়ের ক্যাটাগরি", href: "/categories" },
+    { name: "বইয়ের ক্যাটাগরি", href: "/category" },
   ];
 
   return (

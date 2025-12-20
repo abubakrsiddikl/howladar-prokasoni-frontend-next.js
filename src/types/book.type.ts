@@ -4,6 +4,7 @@ export interface IBook {
   author: {
     _id: string;
     name: string;
+    slug: string;
   };
   price: number;
   stock: number;

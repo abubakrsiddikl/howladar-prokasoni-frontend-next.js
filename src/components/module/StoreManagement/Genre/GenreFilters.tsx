@@ -7,7 +7,7 @@ const GenreFilters = () => {
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-3">
-        <SearchFilter paramName="searchTerm" placeholder="Search Books..." />
+        <SearchFilter paramName="searchTerm" placeholder="Search Category..." />
         <RefreshButton />
       </div>
     </div>

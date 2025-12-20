@@ -7,11 +7,11 @@ const CategoryCard = ({ category }: { category: IGenre }) => (
     {/* Profile Image (Placeholder/Actual Image) */}
     <Link
       href={`/category/${category.slug}`}
-      className="text-base font-semibold text-[#3a8fd1] hover:text-red-400 hover:underline"
+      className="text-base font-semibold text-[#3a8fd1] hover:text-red-400 hover:underline flex flex-col justify-center items-center"
     >
       <div className="relative h-24 w-24 mb-3">
         <Image
-          src={"/writer.png"}
+          src={"/category-i.png"}
           alt={category.name}
           layout="fill"
           objectFit="cover"
@@ -21,7 +21,7 @@ const CategoryCard = ({ category }: { category: IGenre }) => (
 
       {/* Genre Name */}
 
-      {category.name}
+      <p>{category.name}</p>
     </Link>
   </div>
 );
