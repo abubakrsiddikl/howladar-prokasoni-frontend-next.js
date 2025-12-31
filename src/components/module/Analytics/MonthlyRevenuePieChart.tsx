@@ -1,107 +1,76 @@
-"use client";
 
-import { Pie, PieChart } from "recharts";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartLegend,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { IMonthlyStats } from "@/types";
+"use client"
 
-const chartConfig = {
-  January:   { label: "January", color: "#10B981" },
-  February:  { label: "February", color: "#6366F1" },
-  March:     { label: "March", color: "#F59E0B" },
-  April:     { label: "April", color: "#EF4444" },
-  May:       { label: "May", color: "#06B6D4" },
-  June:      { label: "June", color: "#8B5CF6" },
-  July:      { label: "July", color: "#EC4899" },
-  August:    { label: "August", color: "#F97316" },
-  September: { label: "September", color: "#84CC16" },
-  October:   { label: "October", color: "#F43F5E" },
-  November:  { label: "November", color: "#3B82F6" },
-  December:  { label: "December", color: "#14B8A6" },
-} satisfies ChartConfig;
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { IMonthlyStats } from "@/types"
 
+interface Props {
+  data: IMonthlyStats[]
+}
 
-export default function MonthlyRevenuePieChart({
-  stats,
-}: {
-  stats: IMonthlyStats[];
-}) {
-  const fallbackColors = [
-    "#10B981",
-    "#6366F1",
-    "#F59E0B",
-    "#EF4444",
-    "#06B6D4",
-  ];
-
-  // FIXED: index added
-  const chartData = stats.map((item, index) => ({
-    name: `${item.month} ${item.year}`,
-    value: item.totalRevenue,
-    fill:
-      chartConfig[item.month as keyof typeof chartConfig]?.color ||
-      fallbackColors[index % fallbackColors.length],
-  }));
-
-  const totalRevenue = chartData.reduce((acc, curr) => acc + curr.value, 0);
-
+export function MonthlyRevenueChart({ data }: Props) {
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0">
+    <Card className="col-span-4 overflow-hidden">
+      <CardHeader>
         <CardTitle>Monthly Revenue Analysis</CardTitle>
         <CardDescription>
-          Total Revenue : ৳ {totalRevenue.toFixed(2)} Tk.
+          Showing total revenue for the current year
         </CardDescription>
       </CardHeader>
-
-      <CardContent className="flex-1 pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[300px]"
-        >
-          <PieChart>
-            {/* Tooltip */}
-            <ChartTooltip
-              cursor={false}
-              content={
-                <ChartTooltipContent
-                  nameKey="name"
-                  formatter={(value) =>
-                    typeof value === "number"
-                      ? [`৳ ${value.toLocaleString("en-IN")}`, ""]
-                      : [value, ""]
-                  }
-                />
-              }
+      {/* এখানে bg-muted/30 বা bg-slate-50 ব্যবহার করে ব্যাকগ্রাউন্ড কালার দেওয়া হয়েছে */}
+      <CardContent className="h-[300px] w-full pt-6 bg-slate-50/50"> 
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart
+            data={data}
+            margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+          >
+            <defs>
+              <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            {/* vertical={true} করে দিলে লম্বালম্বি দাগগুলোও আসবে, ব্যাকগ্রাউন্ডের সাথে যা সুন্দর লাগে */}
+            <CartesianGrid 
+                strokeDasharray="3 3" 
+                vertical={true} 
+                stroke="#e2e8f0" // হালকা গ্রে কালার দাগের জন্য
             />
-
-            {/* Pie */}
-            <Pie
-              data={chartData}
-              dataKey="value"
-              nameKey="name"
-              innerRadius={60}
-              outerRadius={100}
-              paddingAngle={2}
+            <XAxis 
+              dataKey="month" 
+              axisLine={false} 
+              tickLine={false} 
+              tick={{ fill: '#64748b', fontSize: 12, fontWeight: 500 }}
+              dy={10}
             />
-
-            {/* FIXED: No nested ChartLegend */}
-            <ChartLegend className="flex-wrap gap-2 pt-2" />
-          </PieChart>
-        </ChartContainer>
+            <YAxis 
+              axisLine={false} 
+              tickLine={false} 
+              tick={{ fill: '#64748b', fontSize: 12 }}
+              tickFormatter={(value) => `৳${value}`}
+            />
+            <Tooltip 
+              contentStyle={{ 
+                borderRadius: '12px', 
+                border: '1px solid #e2e8f0', 
+                boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)',
+                backgroundColor: '#ffffff'
+              }}
+              formatter={(value: number) => [`৳${value}`, "Revenue"]}
+            />
+            <Area
+              type="monotone"
+              dataKey="totalRevenue"
+              stroke="#0ea5e9"
+              strokeWidth={3} // দাগটা একটু মোটা করা হয়েছে ফোকাস পাওয়ার জন্য
+              fillOpacity={1}
+              fill="url(#colorRevenue)"
+              animationDuration={1500}
+            />
+          </AreaChart>
+        </ResponsiveContainer>
       </CardContent>
     </Card>
-  );
+  )
 }
