@@ -1,14 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IBook, IResponse } from "@/types";
+"use server";
+import { IBook, IHomeBook, IResponse } from "@/types";
 import { apiRequest } from "../apiClient";
 import { bookSchema } from "@/zodSchema/book.schema";
 import { zodValidator } from "@/lib/zodValidator";
+import { revalidateTag } from "next/cache";
 
 // get all books
 export const getAllBooks = async (
-  queryString?: string
+  queryString?: string,
 ): Promise<IResponse<IBook[]>> => {
   const res = await apiRequest<IBook[]>(`/book/all-books?${queryString ?? ""}`);
+  return res;
+};
+
+export const getHomeBooks = async (): Promise<IResponse<IHomeBook[]>> => {
+  const res = await apiRequest<IHomeBook[]>(`/book/home-books`, {
+    next: {
+      tags: ["books"],
+      revalidate: 60 * 60 * 24,
+    },
+  });
   return res;
 };
 
@@ -19,10 +31,9 @@ export const getSingleBook = async (slug: string): Promise<IBook> => {
   return res.data;
 };
 
-
 export const createBook = async (
   _prevState: any,
-  formData: FormData
+  formData: FormData,
 ): Promise<any> => {
   // form values
 
@@ -78,6 +89,9 @@ export const createBook = async (
     method: "POST",
     body: backendData,
   });
+  if (result.success) {
+    revalidateTag("books", { expire: 0 });
+  }
   return result;
 };
 
@@ -85,7 +99,7 @@ export const createBook = async (
 export const updateBook = async (
   id: string,
   _prevState: any,
-  formData: FormData
+  formData: FormData,
 ): Promise<any> => {
   const validationPayload = {
     title: formData.get("title"),
@@ -133,13 +147,20 @@ export const updateBook = async (
     body: backendData,
   });
 
+  if (result.success) {
+    revalidateTag("books", { expire: 0 });
+  }
+
   return result;
 };
 
 // delete book
 export const deleteBook = async (id: string) => {
-  const result = apiRequest(`/book/delete/${id}`,{
-    method: "DELETE"
+  const result = await apiRequest(`/book/delete/${id}`, {
+    method: "DELETE",
   });
+  if (result.success) {
+    revalidateTag("books", { expire: 0 });
+  }
   return result;
 };

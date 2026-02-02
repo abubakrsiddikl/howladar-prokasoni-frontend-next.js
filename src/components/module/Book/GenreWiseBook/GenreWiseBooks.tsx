@@ -1,14 +1,19 @@
-import { getAllSortedGenre } from "@/services/Genre/genre.api";
+
 import { GenreSection } from "./GenreSection";
+import { getHomeBooks } from "@/services/Book/book.api";
 
 export default async function GenreWiseBooks() {
-  const genreRes = await getAllSortedGenre();
-  
+  const homePageBooks = await getHomeBooks();
+
 
   return (
     <div className="space-y-10 w-11/12 mx-auto max-w-6xl ">
-      {genreRes?.data.map((genre) => (
-        <GenreSection key={genre._id} genre={genre} />
+      {homePageBooks?.data.map((genre) => (
+        <GenreSection
+          key={genre.genreId}
+          genre={genre.genreDetails}
+          books={genre.books || []}
+        />
       ))}
     </div>
   );

@@ -1,14 +1,15 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import { env } from "@/config/env";
+import { useSearchParams } from "next/navigation";
+
+import { FcGoogle } from "react-icons/fc";
 
 export default function GoogleLogin() {
-  
-  
-
+  const searchParams = useSearchParams();
+  const redirectPath = searchParams.get("redirect") || "";
   const handleGoogleLogin = () => {
-    
-    window.location.href = `${env.baseUrl}/auth/google?redirect=${""}`;
+    window.location.href = `${env.baseUrl}/auth/google?redirect=${redirectPath}`;
   };
   return (
     <div>
@@ -16,9 +17,10 @@ export default function GoogleLogin() {
         onClick={handleGoogleLogin}
         type="button"
         variant="outline"
-        className="w-full cursor-pointer bg-black text-white"
+        className="w-full mt-2 cursor-pointer bg-black text-white"
       >
-         Login with Google
+        <FcGoogle />
+        Login with Google
       </Button>
     </div>
   );

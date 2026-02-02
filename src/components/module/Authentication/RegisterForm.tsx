@@ -3,7 +3,6 @@
 
 import { useActionState, useEffect } from "react";
 
-
 import { registerUser } from "@/services/Auth/auth.api";
 
 import { toast } from "sonner";
@@ -13,6 +12,7 @@ import InputFieldError from "@/components/shared/InputFieldError";
 import PasswordInput from "@/components/shared/PasswordInput";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
+import GoogleLogin from "./GoogleLogin";
 
 export default function RegisterForm() {
   const [state, formAction, pending] = useActionState(registerUser, null);
@@ -87,12 +87,15 @@ export default function RegisterForm() {
           </Field>
         </div>
 
-        <Field className="mt-5">
+        <Field className="mt-2">
           <Button type="submit" disabled={pending}>
             {pending ? "Creating Account..." : "Create Account"}
           </Button>
         </Field>
       </FieldGroup>
+      <p className="mt-2">
+        <GoogleLogin></GoogleLogin>
+      </p>
     </form>
   );
 }

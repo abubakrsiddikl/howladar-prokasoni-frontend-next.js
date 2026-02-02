@@ -5,7 +5,7 @@ export type RouteConfig = {
   pattern: RegExp[];
 };
 
-export const authRoutes = ["/login", "/register"];
+export const authRoutes = ["/login", "/register", "/forget-password"];
 
 export const commonProtectedRoutes: RouteConfig = {
   exact: ["/my-account"],

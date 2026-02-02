@@ -2,20 +2,25 @@
 "use client";
 import InputFieldError from "@/components/shared/InputFieldError";
 import { Button } from "@/components/ui/button";
-import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { loginUser } from "@/services/Auth/auth.api";
 import { useActionState, useEffect } from "react";
 
-
 import { toast } from "sonner";
+import GoogleLogin from "./GoogleLogin";
 
 const LoginForm = ({ redirect }: { redirect?: string }) => {
   const [state, formAction, isPending] = useActionState(loginUser, null);
   useEffect(() => {
     if (state && !state.success && state.message) {
       toast.error(state.message);
-    } 
+    }
   }, [state]);
   return (
     <form action={formAction}>
@@ -55,24 +60,26 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
               {isPending ? "Logging in..." : "Login"}
             </Button>
 
-            <FieldDescription className="px-6 text-center">
-              Don&apos;t have an account?{" "}
-              <a href="/register" className="text-blue-600 hover:underline">
-                Sign up
-              </a>
-            </FieldDescription>
-            {/* forget password */}
-            {/* <FieldDescription className="px-6 text-center">
-              <a
-                href="/forget-password"
-                className="text-blue-600 hover:underline"
-              >
-                Forgot password?
-              </a>
-            </FieldDescription> */}
+            <p className="flex justify-between">
+              {/* forget password */}
+              <FieldDescription className="px-6 text-center">
+                <a
+                  href="/forget-password"
+                  className="text-blue-600 hover:underline"
+                >
+                  Forgot password ?
+                </a>
+              </FieldDescription>
+              <FieldDescription className="px-6 text-center">
+                <a href="/register" className="text-blue-600 hover:underline">
+                  Sign up ?
+                </a>
+              </FieldDescription>
+            </p>
           </Field>
         </FieldGroup>
       </FieldGroup>
+      <GoogleLogin></GoogleLogin>
     </form>
   );
 };

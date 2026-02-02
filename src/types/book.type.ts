@@ -1,3 +1,5 @@
+import { IGenre } from "./genre.type";
+
 export interface IBook {
   _id: string;
   title: string;
@@ -22,6 +24,12 @@ export interface IBook {
   createdAt?: string;
   updatedAt?: string;
   slug?: string;
+}
+
+export interface IHomeBook {
+  genreId: string;
+  books: IBook[];
+  genreDetails: IGenre;
 }
 
 export const Genre = {
