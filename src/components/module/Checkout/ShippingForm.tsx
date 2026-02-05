@@ -2,7 +2,7 @@
 import React, { useActionState, useEffect, useState } from "react";
 import useCart from "@/hooks/useCart";
 import { useLocationData } from "@/hooks/useLocationData";
-import { IPaymentMethod } from "@/types";
+import { IPaymentMethod, IUser } from "@/types";
 
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -20,9 +20,11 @@ import { Input } from "@/components/ui/input";
 import InputFieldError from "@/components/shared/InputFieldError";
 import { createOrder } from "@/services/Order/order.api";
 import OrderSummary from "./OrderSummary";
+import Link from "next/link";
 
-export default function ShippingForm() {
+export default function ShippingForm({ user }: { user: Partial<IUser> }) {
   const { cart, clearCart } = useCart();
+  const [isAgreed, setIsAgreed] = useState(true);
   const router = useRouter();
 
   const {
@@ -35,32 +37,31 @@ export default function ShippingForm() {
     selectedDistrict,
   } = useLocationData();
 
-  const [paymentMethod, setPaymentMethod] = useState<IPaymentMethod>("COD");
+  const [paymentMethod, setPaymentMethod] =
+    useState<IPaymentMethod>("SSLCommerz");
 
   const [state, formAction, isPending] = useActionState(
     createOrder.bind(null, cart),
-    null
+    null,
   );
 
   const totalDiscountedPrice = cart.reduce(
     (sum: number, item) =>
       sum + (item.book.discountedPrice || 0) * item.quantity,
-    0
+    0,
   );
 
   const subtotal = cart.reduce(
     (sum: number, item) => sum + item.book.price * item.quantity,
-    0
+    0,
   );
 
   // calculate deliveryCharge
   let deliveryCharge = 0;
-  
+
   if (selectedDistrict === "ঢাকা") {
-    
     deliveryCharge = 60;
   } else if (selectedDistrict) {
-    
     deliveryCharge = 120;
   }
   const totalAmount = subtotal + deliveryCharge;
@@ -105,6 +106,7 @@ export default function ShippingForm() {
                   name="name"
                   type="text"
                   placeholder="আপনার নাম"
+                  defaultValue={user?.name}
                 />
                 <InputFieldError field="name" state={state} />
               </Field>
@@ -119,6 +121,7 @@ export default function ShippingForm() {
                   name="email"
                   type="email"
                   placeholder="আপনার ইমেইল"
+                  defaultValue={user?.email}
                 />
                 <InputFieldError field="email" state={state} />
               </Field>
@@ -133,6 +136,7 @@ export default function ShippingForm() {
                   name="phone"
                   type="text"
                   placeholder="মোবাইল নাম্বার"
+                  defaultValue={user?.phone}
                 />
                 <InputFieldError field="phone" state={state} />
               </Field>
@@ -237,10 +241,10 @@ export default function ShippingForm() {
                   <SelectValue placeholder="পেমেন্ট পদ্ধতি নির্বাচন করুন" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="COD">ক্যাশ অন ডেলিভারি (COD)</SelectItem>
                   <SelectItem value="SSLCommerz">
                     SSLCommerz (Online)
                   </SelectItem>
+                  <SelectItem value="COD">ক্যাশ অন ডেলিভারি (COD)</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -249,12 +253,35 @@ export default function ShippingForm() {
             </Field>
           </div>
 
-          {/* Button */}
+          {/* Terms and Conditions Checkbox (SSL Requirement) */}
+          <div className="flex items-center gap-2 py-2">
+            <input
+              type="checkbox"
+              id="terms"
+              checked={isAgreed}
+              onChange={(e) => setIsAgreed(e.target.checked)}
+              className="w-4 h-4 cursor-pointer accent-blue-600"
+            />
+            <label
+              htmlFor="terms"
+              className="text-sm text-gray-600 cursor-pointer"
+            >
+              হাওলাদার প্রকাশনীর শর্তাবলীতে সম্মতি প্রদান করছি ।
+              <Link
+                href="/terms-conditions"
+                className="text-blue-600 ml-2 underline"
+              >
+                শর্তাবলী
+              </Link>
+            </label>
+          </div>
+
+          {/* বাটনটি আপডেট করুন (disabled কন্ডিশন যোগ করা হয়েছে) */}
           <Button
             type="submit"
-            disabled={isPending || cart.length === 0}
+            disabled={isPending || cart.length === 0 || !isAgreed} // 💡 !isAgreed যোগ করা হয়েছে
             className={`bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer w-full mt-4 ${
-              isPending ? "opacity-50 cursor-not-allowed" : ""
+              isPending || !isAgreed ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
             {isPending

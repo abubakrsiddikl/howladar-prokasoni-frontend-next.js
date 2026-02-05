@@ -31,8 +31,7 @@ export default function Footer() {
               সংস্কৃতিতে অবদান রাখা।
             </p>
             <div className="text-xs text-gray-500 space-y-1">
-              <p>ট্রেড লাইসেন্স নং: আপনার-নম্বর-দিন</p>
-              <p>TIN: আপনার-নম্বর-দিন</p>
+              <p>TIN: 779833596275</p>
             </div>
           </div>
 
@@ -44,10 +43,18 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li>
                 <Link
+                  href="/category"
+                  className="text-gray-400 hover:text-white transition"
+                >
+                  ক্যাটাগরি
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/about-us"
                   className="text-gray-400 hover:text-white transition"
                 >
-                  আমাদের সম্পর্কে (About Us)
+                  About Us
                 </Link>
               </li>
               <li>
@@ -55,7 +62,7 @@ export default function Footer() {
                   href="/privacy-policy"
                   className="text-gray-400 hover:text-white transition"
                 >
-                  প্রাইভেসি পলিসি
+                  Privacy Policy
                 </Link>
               </li>
               <li>
@@ -63,7 +70,7 @@ export default function Footer() {
                   href="/terms-conditions"
                   className="text-gray-400 hover:text-white transition"
                 >
-                  শর্তাবলী (Terms & Conditions)
+                  Terms & Conditions
                 </Link>
               </li>
               <li>
@@ -71,7 +78,7 @@ export default function Footer() {
                   href="/refund-policy"
                   className="text-gray-400 hover:text-white transition"
                 >
-                  রিফান্ড পলিসি
+                  Refund Policy
                 </Link>
               </li>
             </ul>
@@ -103,12 +110,20 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-yellow-500 mt-1" />
                 <span className="text-gray-400">
-                  ৩৮/৪, পি কে রায় রোড, বাংলাবাজার, ঢাকা 
+                  ৩৮/৪, পি কে রায় রোড, বাংলাবাজার, ঢাকা
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-yellow-500" />
                 <span className="text-gray-400">+8801726956104</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Mail className="w-5 h-5 text-yellow-500" />
+                <span className="text-gray-400 line-clamp-2">
+                  <a href="mailto:howladarprokasoni@gmail.com">
+                    howladarprokasoni@gmail.com
+                  </a>
+                </span>
               </li>
             </ul>
           </div>
@@ -118,13 +133,13 @@ export default function Footer() {
         <div className="border-t border-gray-800 py-8 flex justify-center">
           <div className="">
             {/* আপনার পাবলিক ফোল্ডারে ব্যানার ইমেজটি রেখে এখানে সোর্স দিন */}
-            {/* <Image 
+            <Image 
               src={sslBanner} 
               alt="SSLCOMMERZ Payment Methods" 
-              width={100} 
-              height={100} 
+              width={1000} 
+              height={200} 
               className="w-full grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition duration-500"
-            /> */}
+            />
           </div>
         </div>
 
@@ -138,6 +153,7 @@ export default function Footer() {
               <a
                 href={portfolioLink}
                 className="text-gray-400 hover:text-yellow-400 ml-1"
+                target="_blank"
               >
                 {portfolioName}
               </a>
@@ -145,7 +161,11 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-4 mt-4 md:mt-0">
-            <a href="https://facebook.com/..." className="hover:text-blue-500">
+            <a
+              href="https://www.facebook.com/share/1JMaesPVJL/"
+              className="hover:text-blue-500"
+              target="_blank"
+            >
               <Facebook size={22} />
             </a>
             <a href="#" className="hover:text-pink-500">

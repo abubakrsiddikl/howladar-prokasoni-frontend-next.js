@@ -19,7 +19,7 @@ export interface IShippingInfo {
   city: string;
 }
 
-export type IPaymentMethod = "COD" | "SSLCommerz";
+export type IPaymentMethod = "SSLCommerz" | "COD";
 
 export interface IOrderStatusLog {
   status: "Processing" | "Approved" | "Shipped" | "Delivered" | "Cancelled";

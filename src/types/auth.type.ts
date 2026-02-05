@@ -10,6 +10,7 @@ export interface IUser {
   isDeleted: boolean;
   isActive: string;
   isVerified: boolean;
+  phone: string;
   role: TRole;
   auths: Auth[];
   createdAt: string;
