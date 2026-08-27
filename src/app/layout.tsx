@@ -104,7 +104,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* meta pixel */}
-        {/* 🔵 Meta Pixel Script */}
+        {/*  Meta Pixel Script */}
         <Script
           id="meta-pixel"
           strategy="afterInteractive"

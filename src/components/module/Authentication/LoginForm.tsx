@@ -14,6 +14,7 @@ import { useActionState, useEffect } from "react";
 
 import { toast } from "sonner";
 import GoogleLogin from "./GoogleLogin";
+import Link from "next/link";
 
 const LoginForm = ({ redirect }: { redirect?: string }) => {
   const [state, formAction, isPending] = useActionState(loginUser, null);
@@ -71,9 +72,9 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
                 </a>
               </FieldDescription>
               <FieldDescription className="px-6 text-center">
-                <a href="/register" className="text-blue-600 hover:underline">
+                <Link href="/register" className="text-blue-600 hover:underline">
                   Sign up ?
-                </a>
+                </Link>
               </FieldDescription>
             </p>
           </Field>

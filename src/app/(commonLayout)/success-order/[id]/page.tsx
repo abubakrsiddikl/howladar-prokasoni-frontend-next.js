@@ -30,12 +30,12 @@ export default function OrderSuccessPage() {
         )}
 
         <div className="flex gap-4 justify-center">
-          <Link
+          {/* <Link
             href="/customer/dashboard/orders"
             className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700"
           >
             🧾 অর্ডার সমূহ দেখুন
-          </Link>
+          </Link> */}
           <Link
             href="/"
             className="bg-gray-200 text-gray-800 px-5 py-2 rounded hover:bg-gray-300"

@@ -1,3 +1,5 @@
+import { ICampaign } from "./campaign.type";
+
 export interface IOrderItem {
   book: {
     title: string;
@@ -29,7 +31,7 @@ export interface IOrderStatusLog {
 }
 export interface IOrder {
   _id: string;
-  user: string;
+  user?: string;
   items: IOrderItem[];
   shippingInfo: IShippingInfo;
   paymentMethod: IPaymentMethod;
@@ -38,6 +40,8 @@ export interface IOrder {
   orderStatusLog: IOrderStatusLog[];
   currentStatus: string;
   orderId: string;
+  orderType: "REGULAR" | "CAMPAIGN";
+  campaignId?: ICampaign;
   deliveryCharge: number;
   totalDiscountedPrice: number;
   invoiceURL: string;

@@ -97,7 +97,7 @@ export default function NavbarComponent({
                     {/* 9. এপ্রন */}
                     {/* <DrawerItem href="#" label="এপ্রন" Icon={Shirt} />  */}
                     {/* track order */}
-                    <DrawerItem href="/order/trace" label="অর্ডার ট্র্যাক" Icon={Truck} /> 
+                    <DrawerItem href="/trace-order" label="অর্ডার ট্র্যাক" Icon={Truck} /> 
 
                     {/* 10. কার্ট */}
                     <DrawerItem

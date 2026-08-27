@@ -77,6 +77,12 @@ export const storeManagerNavItems: NavSection[] = [
         icon: "ImagePlus",
         roles: ["STORE_MANAGER", "ADMIN"],
       },
+      {
+        title: "Add New Campaign",
+        href: "/store-manager/dashboard/campaign-management",
+        icon: "Plus",
+        roles: ["STORE_MANAGER", "ADMIN"],
+      },
     ],
   },
 ];

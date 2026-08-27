@@ -2,9 +2,11 @@
 import { MetadataRoute } from "next";
 import { getAllBooks } from "@/services/Book/book.api";
 import { IBook } from "@/types";
+import { getAllActiveCampaigns } from "@/services/Campaign/campaign.api";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const books = await getAllBooks("limit=3000");
+  const campaigns = await getAllActiveCampaigns("limit=3000");
 
   const bookUrls: MetadataRoute.Sitemap = books?.data.map((book: IBook) => ({
     url: `https://howladarporkasoni.com.bd/book/${book.slug}`,
@@ -13,8 +15,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
+  // campaign urls
+  const campaignUrls: MetadataRoute.Sitemap = campaigns?.data.map(
+    (campaign) => ({
+      url: `https://howladarporkasoni.com.bd/campaign/${campaign.slug}`,
+      lastModified: new Date(campaign.updatedAt!).toISOString(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    }),
+  );
+
   return [
-    
     {
       url: "https://howladarporkasoni.com.bd",
       lastModified: new Date(),
@@ -33,7 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.7,
     },
-    
+    ...campaignUrls,
     ...bookUrls,
   ];
 }

@@ -20,7 +20,7 @@ export const orderStatusSchema = z
 
 export const shippingInfoSchema = z.object({
     name: z.string(),
-    email: z.string(),
+    email: z.string().optional(),
     phone: z.string(),
     address: z.string(),
     division: z.string(),
@@ -34,11 +34,39 @@ export const paymentMethodSchema = z.object({
 });
 
 
+// campaign order schema
+export const campaignOrderSchema = z.object({
+  campaignId: z
+    .string()
+    .min(1, "Campaign ID is required"),
 
+  orderType: z.literal("CAMPAIGN"),
+
+  shippingInfo: shippingInfoSchema,
+
+  paymentMethod: z.literal("COD"),
+});
+
+// regular order schema
+export const regularOrderSchema = z.object({
+  orderType: z.literal("REGULAR"),
+
+  shippingInfo: shippingInfoSchema,
+
+  paymentMethod: paymentMethodSchema.shape.paymentMethod,
+
+  items: z
+    .array(
+      z.object({
+        book: z.string().min(1),
+        quantity: z.number().int().min(1),
+      })
+    )
+    .min(1, "কমপক্ষে একটি বই নির্বাচন করুন।"),
+});
 
 
 export const orderTraceSchema = z.object({
-  // Order ID সাধারণত একটি নির্দিষ্ট স্ট্রিং লেন্থ বা প্যাটার্ন অনুসরণ করে
   orderId: z
     .string()
     .min(5, "অর্ডার নম্বর কমপক্ষে ৫ অক্ষরের হতে হবে।")

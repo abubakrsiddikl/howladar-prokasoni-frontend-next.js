@@ -4,8 +4,10 @@ import { IOrder, OrderTraceState } from "@/types/order.type";
 import { apiRequest } from "../apiClient";
 import { zodValidator } from "@/lib/zodValidator";
 import {
+  campaignOrderSchema,
   orderStatusSchema,
   paymentMethodSchema,
+  regularOrderSchema,
   shippingInfoSchema,
 } from "@/zodSchema/order.schema";
 
@@ -115,8 +117,8 @@ export const updateOrderStatus = async (
   return result;
 };
 
-// create order
-export const createOrder = async (
+// create order old
+export const createRegularOrder = async (
   cart: ICartItem[],
   _prevState: any,
   formData: FormData
@@ -125,12 +127,14 @@ export const createOrder = async (
     name: formData.get("name"),
     email: formData.get("email"),
     phone: formData.get("phone"),
+    orderType: formData.get("orderType"),
     address: formData.get("address"),
     division: formData.get("division"),
     district: formData.get("district"),
     city: formData.get("city"),
     paymentMethod: formData.get("paymentMethod"),
   };
+  // console.log(validationPayload,"paylosd")
 
   const shippingValidationResult = shippingInfoSchema.safeParse({
     name: validationPayload.name,
@@ -173,7 +177,7 @@ export const createOrder = async (
   const payload = {
     items: orderItems,
     totalDiscountedPrice: totalDiscountedPrice,
-
+    orderType: validationPayload.orderType,
     shippingInfo: shippingValidationResult.data,
     paymentMethod: paymentValidationResult.data.paymentMethod,
   };
@@ -191,4 +195,66 @@ export const createOrder = async (
   }
 
   return result;
+};
+
+export const createCampaignOrder = async (
+  cart: ICartItem[],
+  _prevState: any,
+  formData: FormData,
+): Promise<any> => {
+  const orderType = formData.get("orderType")?.toString();
+
+  const shippingData = {
+    name: formData.get("name")?.toString() || "",
+    email: formData.get("email")?.toString() || "",
+    phone: formData.get("phone")?.toString() || "",
+    address: formData.get("address")?.toString() || "",
+    division: formData.get("division")?.toString() || "",
+    district: formData.get("district")?.toString() || "",
+    city: formData.get("city")?.toString() || "",
+  };
+
+  // ==========================================
+  // CAMPAIGN ORDER
+  // ==========================================
+
+  if (orderType === "CAMPAIGN") {
+    const campaignPayload = {
+      campaignId: formData.get("campaignId")?.toString() || "",
+
+      orderType: "CAMPAIGN" as const,
+
+      shippingInfo: shippingData,
+
+      paymentMethod: "COD" as const,
+    };
+
+    const validation =
+      campaignOrderSchema.safeParse(campaignPayload);
+      console.log(validation,"validation")
+
+    if (!validation.success) {
+      return {
+        success: false,
+        message: "Validation failed",
+        errors: validation.error.flatten().fieldErrors,
+      };
+    }
+
+    const result = await apiRequest(
+      "/order/create/campaign",
+      {
+        method: "POST",
+        body: JSON.stringify(validation.data),
+      },
+    );
+
+    return result;
+  }
+
+
+  return {
+    success: false,
+    message: "Invalid order type.",
+  };
 };

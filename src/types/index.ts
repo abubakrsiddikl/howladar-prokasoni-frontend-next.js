@@ -7,6 +7,7 @@ export * from "./banner.type";
 export * from "./order.type";
 export * from "./stats.type";
 export * from "./author.type";
+export * from "./campaign.type";
 
 export interface TMeta {
   total: number;

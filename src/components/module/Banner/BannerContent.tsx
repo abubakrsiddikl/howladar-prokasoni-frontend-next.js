@@ -10,11 +10,11 @@ import "swiper/css/pagination";
 
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import { IBanner } from "@/types";
+import { IBanner, ICampaign } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function BannerContent({ banners }: { banners: IBanner[] }) {
+export default function BannerContent({ banners }: { banners: ICampaign[] }) {
   return (
     <div className="my-5">
       <Swiper
@@ -36,9 +36,9 @@ export default function BannerContent({ banners }: { banners: IBanner[] }) {
       >
         {banners?.map((banner) => (
           <SwiperSlide key={banner._id}>
-            <Link href={banner.link ? banner.link : "/"}>
+            <Link href={banner.slug ? `/campaign/${banner.slug}` : "/"}>
               <Image
-                src={banner.image}
+                src={banner.bannerImage}
                 className="w-full h-[194px] md:h-[300px] rounded-md"
                 width={1200}
                 height={400}

@@ -20,6 +20,11 @@ export const getOrderColumns = (user: IUser | undefined): Column<IOrder>[] => {
       sortKey: "createdAt",
       className: "p-2 min-w-[120px]",
     },
+     {
+      header: "Order Type",
+      accessor: "orderType",
+      className: "p-2 font-medium min-w-[150px]",
+    },
     {
       header: "Order ID",
       accessor: "orderId",

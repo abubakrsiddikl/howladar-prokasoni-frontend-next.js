@@ -18,11 +18,11 @@ import { toast } from "sonner";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import InputFieldError from "@/components/shared/InputFieldError";
-import { createOrder } from "@/services/Order/order.api";
+import { createRegularOrder } from "@/services/Order/order.api";
 import OrderSummary from "./OrderSummary";
 import Link from "next/link";
 
-export default function ShippingForm({ user }: { user: Partial<IUser> }) {
+export default function ShippingForm({ user }: { user?: Partial<IUser> }) {
   const { cart, clearCart } = useCart();
   const [isAgreed, setIsAgreed] = useState(true);
   const router = useRouter();
@@ -41,7 +41,7 @@ export default function ShippingForm({ user }: { user: Partial<IUser> }) {
     useState<IPaymentMethod>("SSLCommerz");
 
   const [state, formAction, isPending] = useActionState(
-    createOrder.bind(null, cart),
+    createRegularOrder.bind(null, cart),
     null,
   );
 
@@ -83,7 +83,7 @@ export default function ShippingForm({ user }: { user: Partial<IUser> }) {
     } else if (state?.success) {
       toast.success(state.message || "Order created successfully!");
       clearCart();
-      router.push(`/order/order-success/${state?.data?.orderId}`);
+      router.push(`/success-order/${state?.data?.orderId}`);
     } else if (state?.success === false) {
       toast.error(state.message || "Failed to create order.");
     }
@@ -95,6 +95,7 @@ export default function ShippingForm({ user }: { user: Partial<IUser> }) {
         <h2 className="text-xl font-semibold mb-4">ডেলিভারি ঠিকানা</h2>
 
         <form action={formAction} className="space-y-3">
+          <input type="hidden" name="orderType" value="REGULAR" />
           {/* Name, Email, Phone */}
           <div className="flex flex-col md:flex-row gap-2">
             {/* Name */}
