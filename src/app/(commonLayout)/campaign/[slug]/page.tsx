@@ -90,6 +90,7 @@ export async function generateMetadata({
   const { slug } = await params;
 
   const campaign = await getSingleCampaign(slug);
+  const url = `https://howladarporkasoni.com.bd/campaign/${slug}`;
 
   return {
     title: campaign.title,
@@ -97,6 +98,8 @@ export async function generateMetadata({
 
     openGraph: {
       title: campaign.title,
+      url: url,
+      siteName: "হাওলাদার প্রকাশনী",
       description: campaign.description,
       images: [
         {
@@ -120,6 +123,9 @@ export async function generateMetadata({
       index: true,
       follow: true,
     },
+    alternates:{
+      canonical: url
+    }
   };
 }
 
