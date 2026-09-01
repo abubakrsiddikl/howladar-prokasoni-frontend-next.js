@@ -277,7 +277,7 @@ export default function OrderDetailsCard({
   const router = useRouter();
   const [orderStatus, setOrderStatus] = useState(order.currentStatus);
   const campaign = order?.campaignId;
-  console.log(campaign,"camp")
+  console.log(campaign, "camp");
 
   // A guest/campaign order has no book cart — it's always a single
   // campaign product. Everything else in the card stays the same.
@@ -463,13 +463,16 @@ export default function OrderDetailsCard({
       {/* Shipping Info — same for both order types */}
       <div className="p-4 rounded-lg border bg-white">
         <h2 className="text-lg font-bold mb-4">Shipping Info</h2>
-        <p>🧑 {order.shippingInfo?.name}</p>
-        <p>📧 {order.shippingInfo?.email}</p>
-        <p>📞 {order.shippingInfo?.phone}</p>
+        <p>নাম: {order.shippingInfo?.name}</p>
         <p>
-          📍 {order.shippingInfo?.address}, {order.shippingInfo?.city},
-          District: {order.shippingInfo?.district},{" "}
-          {order.shippingInfo?.division}
+          📧 ইমেইল:{" "}
+          {order.shippingInfo?.email ? order.shippingInfo?.email : "N/A"}
+        </p>
+        <p>📞 ফোন: {order.shippingInfo?.phone}</p>
+        <p>
+          📍ঠিকানা: {order.shippingInfo?.address}, উপজেলা:
+          {order.shippingInfo?.city}, জেলা: {order.shippingInfo?.district},
+          বিভাগ: {order.shippingInfo?.division}
         </p>
       </div>
 

@@ -23,7 +23,7 @@ export const campaignColumns: Column<ICampaign>[] = [
     header: "Title",
     accessor: (row: ICampaign) => (
       <Link
-        href={`/campaign/${row.slug}`}
+        href={row.isActive ? `/campaign/${row.slug}` : "#"}
         className="hover:text-blue-700 hover:underline font-medium"
       >
         {row.title}
@@ -34,6 +34,13 @@ export const campaignColumns: Column<ICampaign>[] = [
   {
     header: "Price",
     accessor: (row) => `৳ ${row.campaignPrice}`,
+    // sortKey: "campaignPrice",
+    className: "p-2",
+  },
+  {
+    header: "Delivery Type",
+    accessor: (row) =>
+      ` ${row.isDeliveryFree ? "Free Delivery" : "Paid Delivery"}`,
     // sortKey: "campaignPrice",
     className: "p-2",
   },

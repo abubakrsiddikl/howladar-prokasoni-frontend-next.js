@@ -20,7 +20,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Image from "next/image";
-import { createCampaign, updateCampaign } from "@/services/Campaign/campaign.api";
+import {
+  createCampaign,
+  updateCampaign,
+} from "@/services/Campaign/campaign.api";
 import { Textarea } from "@/components/ui/textarea";
 
 interface ICampaignFormDialogProps {
@@ -43,10 +46,17 @@ const CampaignFormDialog = ({
     return "true";
   });
 
+  const [isDeliveryFree, setIsDeliveryFree] = useState<string>(() => {
+    if (campaign) {
+      return campaign.isDeliveryFree ? "true" : "false";
+    }
+    return "false";
+  });
+
   const isEdit = !!campaign;
   const [state, formAction, pending] = useActionState(
     isEdit ? updateCampaign.bind(null, campaign._id!) : createCampaign,
-    null
+    null,
   );
   const [image, setImage] = useState<File | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -72,6 +82,7 @@ const CampaignFormDialog = ({
     if (image) {
       formData.append("image", image);
     }
+    formData.append("isDeliveryFree", isDeliveryFree);
     formData.append("isActive", activeStatus);
     formAction(formData);
   };
@@ -118,7 +129,9 @@ const CampaignFormDialog = ({
             {/* Price & Delivery Charge */}
             <div className="grid grid-cols-2 gap-4">
               <Field>
-                <FieldLabel htmlFor="campaignPrice">Campaign Price (BDT)</FieldLabel>
+                <FieldLabel htmlFor="campaignPrice">
+                  Campaign Price (BDT)
+                </FieldLabel>
                 <Input
                   id="campaignPrice"
                   name="campaignPrice"
@@ -129,6 +142,21 @@ const CampaignFormDialog = ({
                 <InputFieldError field="campaignPrice" state={state} />
               </Field>
             </div>
+
+            {/* Delivery Charge */}
+            <Field>
+              <FieldLabel htmlFor="isDeliveryFree">Delivery Type</FieldLabel>
+              <Select onValueChange={setIsDeliveryFree} value={isDeliveryFree}>
+                <SelectTrigger id="isDeliveryFree">
+                  <SelectValue placeholder="Select Delivery Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="true">Free Delivery</SelectItem>
+                  <SelectItem value="false">Paid Delivery</SelectItem>
+                </SelectContent>
+              </Select>
+              <InputFieldError field="isDeliveryFree" state={state} />
+            </Field>
 
             {/* Status */}
             <Field>
@@ -174,8 +202,8 @@ const CampaignFormDialog = ({
               {pending
                 ? "Saving..."
                 : isEdit
-                ? "Update Campaign"
-                : "Create Campaign"}
+                  ? "Update Campaign"
+                  : "Create Campaign"}
             </Button>
           </div>
         </form>

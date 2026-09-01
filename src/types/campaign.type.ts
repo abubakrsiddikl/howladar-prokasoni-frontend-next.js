@@ -6,6 +6,7 @@ export interface ICampaign {
   bannerImage: string;
   description: string;
   campaignPrice: number;
+  isDeliveryFree: boolean;
   isActive: boolean;
   createdAt?: string;
   updatedAt?: string;

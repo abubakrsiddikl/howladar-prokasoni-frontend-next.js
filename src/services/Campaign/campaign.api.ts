@@ -6,10 +6,10 @@ import { ICampaign, IResponse } from "@/types";
 
 // Get all campaigns
 export const getAllCampaigns = async (
-  queryString?: string
+  queryString?: string,
 ): Promise<IResponse<ICampaign[]>> => {
   const result = await apiRequest<ICampaign[]>(
-    `/campaign?${queryString ?? ""}`
+    `/campaign?${queryString ?? ""}`,
   );
   return result;
 };
@@ -22,10 +22,10 @@ export const getSingleCampaign = async (slug: string): Promise<ICampaign> => {
 
 // Get all active campaigns
 export const getAllActiveCampaigns = async (
-  queryString?: string
+  queryString?: string,
 ): Promise<IResponse<ICampaign[]>> => {
   const result = await apiRequest<ICampaign[]>(
-    `/campaign/active?${queryString ?? ""}`
+    `/campaign/active?${queryString ?? ""}`,
   );
   return result;
 };
@@ -33,12 +33,13 @@ export const getAllActiveCampaigns = async (
 // Create campaign
 export const createCampaign = async (
   _prevState: any,
-  formData: FormData
+  formData: FormData,
 ): Promise<any> => {
   const validationPayload = {
     title: formData.get("title"),
     description: formData.get("description"),
     campaignPrice: formData.get("campaignPrice"),
+    isDeliveryFree: formData.get("isDeliveryFree") === "true",
     isActive: formData.get("isActive") === "true",
   };
 
@@ -46,7 +47,7 @@ export const createCampaign = async (
 
   const validatedPayload = zodValidator(
     validationPayload,
-    validatedCampaignSchema
+    validatedCampaignSchema,
   );
 
   if (!validatedPayload.success || !validatedPayload.data) {
@@ -58,7 +59,11 @@ export const createCampaign = async (
     };
   }
 
-  if (!bannerImage || !(bannerImage instanceof File) || bannerImage.size === 0) {
+  if (
+    !bannerImage ||
+    !(bannerImage instanceof File) ||
+    bannerImage.size === 0
+  ) {
     return { success: false, message: "Campaign banner image is required" };
   }
 
@@ -78,20 +83,22 @@ export const createCampaign = async (
 export const updateCampaign = async (
   id: string,
   _prevState: any,
-  formData: FormData
+  formData: FormData,
 ): Promise<any> => {
   const validationPayload = {
     title: formData.get("title"),
     description: formData.get("description"),
     campaignPrice: formData.get("campaignPrice"),
+    isDeliveryFree: formData.get("isDeliveryFree") === "true",
     isActive: formData.get("isActive") === "true",
   };
+  // console.log(validationPayload);
 
   const bannerImage = formData.get("image") as File | null;
 
   const validatedPayload = zodValidator(
     validationPayload,
-    validatedCampaignSchema
+    validatedCampaignSchema,
   );
 
   if (!validatedPayload.success || !validatedPayload.data) {
