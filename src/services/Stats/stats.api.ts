@@ -1,4 +1,9 @@
-import { ICustomerDashboardStats, IMonthlyStats, IStats } from "@/types";
+import {
+  ICustomerDashboardStats,
+  IDailySalesStat,
+  IMonthlyStats,
+  IStats,
+} from "@/types";
 import { apiRequest } from "../apiClient";
 
 // get all stats
@@ -16,5 +21,14 @@ export const getCustomerStats = async () => {
 // get monthly stats
 export const getMonthlyStats = async () => {
   const result = await apiRequest<IMonthlyStats[]>("/stats/monthly-sales");
+  return result;
+};
+
+// daily-sales?days=${days}
+// daily stats
+export const getDailyStats = async (days = 14) => {
+  const result = await apiRequest<IDailySalesStat[]>(
+    `/stats/daily-sales?days=${days}`,
+  );
   return result;
 };

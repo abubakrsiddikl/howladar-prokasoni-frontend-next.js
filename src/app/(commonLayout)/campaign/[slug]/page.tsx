@@ -181,7 +181,7 @@ export default async function CampaignPage(props: {
               src={campaign.bannerImage}
               alt={campaign.title}
               fill
-              className="object-cover"
+              className=""
               priority
             />
             {/* Gradient wash keeps title/badge legible on any photo */}

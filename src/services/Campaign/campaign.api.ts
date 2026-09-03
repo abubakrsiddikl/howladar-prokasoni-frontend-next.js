@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use server"
 import { zodValidator } from "@/lib/zodValidator";
 import { validatedCampaignSchema } from "@/zodSchema/campaign.schema";
 import { apiRequest } from "../apiClient";
 import { ICampaign, IResponse } from "@/types";
+import { revalidateTag } from "next/cache";
 
 // Get all campaigns
 export const getAllCampaigns = async (
@@ -10,12 +12,23 @@ export const getAllCampaigns = async (
 ): Promise<IResponse<ICampaign[]>> => {
   const result = await apiRequest<ICampaign[]>(
     `/campaign?${queryString ?? ""}`,
+    {
+      next: {
+        tags: ["campaign"],
+        revalidate: 60 * 60 * 24,
+      },
+    },
   );
   return result;
 };
 // get single campaign by slug
 export const getSingleCampaign = async (slug: string): Promise<ICampaign> => {
-  const res = await apiRequest<ICampaign>(`/campaign/${slug}`);
+  const res = await apiRequest<ICampaign>(`/campaign/${slug}`, {
+    next: {
+      tags: ["campaign"],
+      revalidate: 60 * 60 * 24,
+    },
+  });
 
   return res.data;
 };
@@ -26,6 +39,12 @@ export const getAllActiveCampaigns = async (
 ): Promise<IResponse<ICampaign[]>> => {
   const result = await apiRequest<ICampaign[]>(
     `/campaign/active?${queryString ?? ""}`,
+    {
+      next: {
+        tags: ["campaign"],
+        revalidate: 60 * 60 * 24,
+      },
+    },
   );
   return result;
 };
@@ -76,6 +95,10 @@ export const createCampaign = async (
     body: backendData,
   });
 
+  if (result.success) {
+    revalidateTag("campaign", { expire: 0 });
+  }
+
   return result;
 };
 
@@ -121,6 +144,9 @@ export const updateCampaign = async (
     method: "PATCH",
     body: backendData,
   });
+  if (result.success) {
+    revalidateTag("campaign", { expire: 0 });
+  }
 
   return result;
 };
@@ -137,5 +163,8 @@ export const deleteCampaign = async (id: string): Promise<any> => {
   const result = await apiRequest(`/campaign/delete/${id}`, {
     method: "DELETE",
   });
+  if (result.success) {
+    revalidateTag("campaign", { expire: 0 });
+  }
   return result;
 };

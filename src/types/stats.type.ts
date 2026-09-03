@@ -48,3 +48,9 @@ export interface ICustomerDashboardStats {
   lastOrder: ILastOrder | null;
   totalLifetimeSpend: number;
 }
+
+export interface IDailySalesStat {
+  date: string;
+  totalOrders: number;
+  totalRevenue: number;
+}
