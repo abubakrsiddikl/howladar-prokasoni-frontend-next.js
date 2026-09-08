@@ -37,3 +37,7 @@ export const loginSchema = z.object({
     .min(1, { message: "Password is required" })
     .min(8, { message: "Password must be at least 8 characters" }),
 });
+
+export const userPromoteSchema = z.object({
+  role: z.string({ error: "Role is required" }),
+});

@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { loginSchema, registerSchema } from "@/zodSchema/auth.schema";
+import {
+  loginSchema,
+  registerSchema,
+  userPromoteSchema,
+} from "@/zodSchema/auth.schema";
 import { apiRequest } from "../apiClient";
-import { ILoginResponse, IUser, TRole } from "@/types";
+import { ILoginResponse, IResponse, IUser, TRole } from "@/types";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { deleteCookie, setCookie } from "./tokenHandlers";
 import {
@@ -12,11 +16,12 @@ import {
 } from "@/utils/auth-utils";
 import { redirect } from "next/navigation";
 import { revalidateTag } from "next/cache";
+import { zodValidator } from "@/lib/zodValidator";
 
 // register api
 export const registerUser = async (
   _currentState: any,
-  formData: FormData
+  formData: FormData,
 ): Promise<any> => {
   const data = {
     name: formData.get("name"),
@@ -52,7 +57,7 @@ export const registerUser = async (
 // login api
 export const loginUser = async (
   _currentState: any,
-  formData: FormData
+  formData: FormData,
 ): Promise<any> => {
   const redirectTo = formData.get("redirect");
 
@@ -88,7 +93,7 @@ export const loginUser = async (
 
   const verifiedToken: JwtPayload | string = jwt.verify(
     res.data.accessToken,
-    process.env.JWT_ACCESS_SECRET as string
+    process.env.JWT_ACCESS_SECRET as string,
   );
   if (typeof verifiedToken === "string") {
     throw new Error("Invalid Token");
@@ -124,11 +129,20 @@ export const getUserProfile = async (): Promise<IUser> => {
   return res.data;
 };
 
+// get All users
+export const getAllUsers = async (
+  queryString?: string,
+): Promise<IResponse<IUser[]>> => {
+  const res = await apiRequest<IUser[]>(`/user/all-users?${queryString ?? ""}`);
+
+  return res;
+};
+
 // update user profile
-export async function updateMyProfile(id:string,formData: FormData) {
+export async function updateMyProfile(id: string, formData: FormData) {
   // Create a new FormData with the data property
   const uploadFormData = new FormData();
- 
+
   // Get all form fields except the file
   const data: any = {};
   formData.forEach((value, key) => {
@@ -154,3 +168,33 @@ export async function updateMyProfile(id:string,formData: FormData) {
   revalidateTag("user-info", { expire: 0 });
   return result;
 }
+
+// update user role for admin
+export const updateUserRole = async (
+  userId: string,
+  _prevState: any,
+  newRole: FormData,
+): Promise<any> => {
+  const validationPayload = newRole.get("role");
+  // console.log("before",validationPayload)
+  const validatedPayload = zodValidator(
+    { role: validationPayload },
+    userPromoteSchema,
+  );
+  // console.log("after zod validtaion",validatedPayload)
+  if (!validatedPayload.success || !validatedPayload.data) {
+    return {
+      success: false,
+      message: "Validation failed",
+      formData: validationPayload,
+      errors: validatedPayload.errors || null,
+    };
+  }
+  const res = await apiRequest<IUser>(`/user/promote/${userId}`, {
+    method: "PATCH",
+    body: JSON.stringify({ role: validatedPayload.data?.role }),
+  });
+
+  revalidateTag("user-info", { expire: 0 });
+  return res;
+};

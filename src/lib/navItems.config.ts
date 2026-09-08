@@ -88,23 +88,18 @@ export const storeManagerNavItems: NavSection[] = [
 ];
 
 export const adminNavItems: NavSection[] = [
-  // {
-  //   title: "User Management",
-  //   items: [
-  //     {
-  //       title: "Store Manager Management",
-  //       href: "/admin/dashboard/storemanager-management",
-  //       icon: "Shield",
-  //       roles: ["ADMIN"],
-  //     },
-  //     {
-  //       title: "Customer Management",
-  //       href: "/admin/dashboard/customer-management",
-  //       icon: "Stethoscope",
-  //       roles: ["ADMIN"],
-  //     },
-  //   ],
-  // },
+  {
+    // title: "User Management",
+    items: [
+      {
+        title: "User Management",
+        href: "/admin/dashboard/users",
+        icon: "UserPlus",
+        roles: ["ADMIN"],
+      },
+      
+    ],
+  },
 ];
 
 export const getNavItemsByRole = (role: TRole): NavSection[] => {
