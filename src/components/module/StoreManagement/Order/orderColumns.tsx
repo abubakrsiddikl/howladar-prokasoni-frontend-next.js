@@ -26,6 +26,11 @@ export const getOrderColumns = (user: IUser | undefined): Column<IOrder>[] => {
       className: "p-2 font-medium min-w-[150px]",
     },
     {
+      header: "Order Source",
+      accessor: (row: IOrder) => row.orderSource || "N/A",
+      className: "p-2 min-w-[150px]",
+    },
+    {
       header: "Order ID",
       accessor: "orderId",
       className: "p-2 font-medium min-w-[150px]",

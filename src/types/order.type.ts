@@ -13,7 +13,7 @@ export interface IOrderItem {
 
 export interface IShippingInfo {
   name: string;
-  email: string;
+  email?: string;
   address: string;
   phone: string;
   division: string;
@@ -41,6 +41,8 @@ export interface IOrder {
   currentStatus: string;
   orderId: string;
   orderType: "REGULAR" | "CAMPAIGN";
+  orderSource?: "MESSENGER" | "WHATSAPP" | "WEBSITE" | "OTHER";
+  description?: string;
   campaignId?: ICampaign;
   deliveryCharge: number;
   totalDiscountedPrice: number;

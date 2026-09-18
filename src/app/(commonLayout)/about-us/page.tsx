@@ -1,4 +1,12 @@
 import { BookOpen, Users, Target, Award } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "আমাদের সম্পর্কে",
+  description:
+    "হাওলাদার প্রকাশনীর লক্ষ্য, প্রকাশনা কার্যক্রম এবং পাঠক সমাজ গড়ার উদ্যোগ সম্পর্কে জানুন।",
+  alternates: { canonical: "/about-us" },
+};
 
 export default function AboutUs() {
   return (

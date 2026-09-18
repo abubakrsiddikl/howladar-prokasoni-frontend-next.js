@@ -1,6 +1,7 @@
 import Banner from "@/components/module/Banner/Banner";
 import GenreWiseBooks from "@/components/module/Book/GenreWiseBook/GenreWiseBooks";
 import { Metadata } from "next";
+import HomeAnalytics from "@/components/shared/HomeAnalytics";
 
 const SITE_LOGO_URL = "https://howladarporkasoni.com.bd/logo.jpg";
 const CONTACT_NUMBER = "+8801936582963";
@@ -92,6 +93,7 @@ export default function HomePage() {
   const homeSchema = generateHomeSchema();
   return (
     <>
+      <HomeAnalytics />
       {/*  JSON-LD Markup */}
       <script
         type="application/ld+json"

@@ -47,6 +47,23 @@ export const campaignOrderSchema = z.object({
   paymentMethod: z.literal("COD"),
 });
 
+export const customOrderSchema = z.object({
+  orderType: z.enum(["REGULAR", "CAMPAIGN"]),
+  orderSource: z.enum(["MESSENGER", "WHATSAPP", "WEBSITE", "OTHER"]),
+  totalAmount: z.coerce.number().min(0, "Total amount cannot be negative."),
+  deliveryCharge: z.coerce.number().min(0, "Delivery charge cannot be negative."),
+  description: z.string().optional(),
+  shippingInfo: shippingInfoSchema.extend({
+    name: z.string().min(1, "Name is required."),
+    phone: z.string().min(1, "Phone number is required."),
+    address: z.string().min(1, "Address is required."),
+    division: z.string().min(1, "Division is required."),
+    district: z.string().min(1, "District is required."),
+    city: z.string().min(1, "City is required."),
+  }),
+  paymentMethod: paymentMethodSchema.shape.paymentMethod,
+});
+
 // regular order schema
 export const regularOrderSchema = z.object({
   orderType: z.literal("REGULAR"),

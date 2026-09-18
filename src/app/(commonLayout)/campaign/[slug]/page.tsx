@@ -80,6 +80,7 @@ import { getSingleCampaign } from "@/services/Campaign/campaign.api";
 import Image from "next/image";
 import { Truck, ShieldCheck, BadgeCheck, Clock } from "lucide-react";
 import { Metadata } from "next";
+import { CampaignAnalytics, CampaignCta } from "@/components/shared/CampaignAnalytics";
 
 // metadata generate
 export async function generateMetadata({
@@ -172,6 +173,11 @@ export default async function CampaignPage(props: {
           currency: "BDT",
         }}
       />
+      <CampaignAnalytics
+        campaignId={campaign._id || campaign.slug}
+        campaignName={campaign.title}
+        campaignPrice={campaign.campaignPrice}
+      />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-28 md:pb-12 pt-6 md:pt-10">
         {/* Hero banner */}
@@ -209,12 +215,14 @@ export default async function CampaignPage(props: {
                   ৳{campaign.campaignPrice}
                 </span>
               </div>
-              <a
+              <CampaignCta
+                campaignId={campaign._id || campaign.slug}
+                campaignName={campaign.title}
                 href="#checkout-form"
                 className="shrink-0 bg-[#0F6F5C] hover:bg-[#0C5A4A] transition-colors text-white font-semibold px-5 py-3 rounded-xl text-sm md:text-base"
               >
                 এখনই অর্ডার করুন
-              </a>
+              </CampaignCta>
             </div>
           </div>
         </div>
@@ -272,12 +280,14 @@ export default async function CampaignPage(props: {
             ৳{campaign.campaignPrice}
           </span>
         </div>
-        <a
+        <CampaignCta
+          campaignId={campaign._id || campaign.slug}
+          campaignName={campaign.title}
           href="#checkout-form"
           className="bg-[#E8483A] text-white font-semibold px-6 py-3 rounded-xl text-sm"
         >
           অর্ডার করুন
-        </a>
+        </CampaignCta>
       </div>
     </div>
   );

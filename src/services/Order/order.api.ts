@@ -5,9 +5,9 @@ import { apiRequest } from "../apiClient";
 import { zodValidator } from "@/lib/zodValidator";
 import {
   campaignOrderSchema,
+  customOrderSchema,
   orderStatusSchema,
   paymentMethodSchema,
-  regularOrderSchema,
   shippingInfoSchema,
 } from "@/zodSchema/order.schema";
 
@@ -257,4 +257,43 @@ export const createCampaignOrder = async (
     success: false,
     message: "Invalid order type.",
   };
+};
+
+export const createCustomOrder = async (
+  _prevState: any,
+  formData: FormData,
+): Promise<any> => {
+  const validation = customOrderSchema.safeParse({
+    orderType: formData.get("orderType")?.toString(),
+    orderSource: formData.get("orderSource")?.toString(),
+    totalAmount: formData.get("totalAmount")?.toString(),
+    deliveryCharge: formData.get("deliveryCharge")?.toString(),
+    description: formData.get("description")?.toString() || undefined,
+    shippingInfo: {
+      name: formData.get("name")?.toString() || "",
+      email: formData.get("email")?.toString() || undefined,
+      phone: formData.get("phone")?.toString() || "",
+      address: formData.get("address")?.toString() || "",
+      division: formData.get("division")?.toString() || "",
+      district: formData.get("district")?.toString() || "",
+      city: formData.get("city")?.toString() || "",
+    },
+    paymentMethod: formData.get("paymentMethod")?.toString(),
+  });
+
+  if (!validation.success) {
+    return {
+      success: false,
+      message: "Validation failed",
+      errors: validation.error.issues.map((issue) => ({
+        field: issue.path.join("."),
+        message: issue.message,
+      })),
+    };
+  }
+
+  return apiRequest("/order/create/custom", {
+    method: "POST",
+    body: JSON.stringify({ ...validation.data, items: [] }),
+  });
 };

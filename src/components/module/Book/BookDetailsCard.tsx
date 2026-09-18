@@ -2,13 +2,14 @@
 import { IBook } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import PreviewGalleryDialog from "./PreviewGalleryDialog";
 import BookCard from "./BookCard";
 import { Button } from "@/components/ui/button";
 import useCart from "@/hooks/useCart";
 import Link from "next/link";
+import { trackGoogleEvent } from "@/lib/analytics";
 
 interface BookDetailsCardProps {
   book: IBook;
@@ -21,7 +22,36 @@ export default function BookDetailsCard({
 }: BookDetailsCardProps) {
   const [open, setOpen] = useState(false);
   const { addToCart } = useCart();
+
+  useEffect(() => {
+    trackGoogleEvent("view_item", {
+      currency: "BDT",
+      value: book.discountedPrice || book.price,
+      items: [{
+        item_id: book._id,
+        item_name: book.title,
+        price: book.discountedPrice || book.price,
+        quantity: 1,
+        item_category: book.genre?.name,
+        item_brand: book.author?.name,
+      }],
+    });
+  }, [book]);
+
   const handleAddToCart = () => {
+    trackGoogleEvent("add_to_cart", {
+      currency: "BDT",
+      value: book.discountedPrice || book.price,
+      items: [{
+        item_id: book._id,
+        item_name: book.title,
+        price: book.discountedPrice || book.price,
+        quantity: 1,
+        item_category: book.genre?.name,
+        item_brand: book.author?.name,
+      }],
+    });
+
     addToCart({
       quantity: 1,
       book: {

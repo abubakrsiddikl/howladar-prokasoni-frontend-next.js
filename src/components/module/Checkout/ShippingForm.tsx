@@ -1,5 +1,5 @@
 "use client";
-import React, { useActionState, useEffect, useState } from "react";
+import React, { useActionState, useEffect, useRef, useState } from "react";
 import useCart from "@/hooks/useCart";
 import { useLocationData } from "@/hooks/useLocationData";
 import { IPaymentMethod, IUser } from "@/types";
@@ -21,6 +21,7 @@ import InputFieldError from "@/components/shared/InputFieldError";
 import { createRegularOrder } from "@/services/Order/order.api";
 import OrderSummary from "./OrderSummary";
 import Link from "next/link";
+import { trackGoogleEvent } from "@/lib/analytics";
 
 export default function ShippingForm({ user }: { user?: Partial<IUser> }) {
   const { cart, clearCart } = useCart();
@@ -38,12 +39,13 @@ export default function ShippingForm({ user }: { user?: Partial<IUser> }) {
   } = useLocationData();
 
   const [paymentMethod, setPaymentMethod] =
-    useState<IPaymentMethod>("SSLCommerz");
+    useState<IPaymentMethod>("COD");
 
   const [state, formAction, isPending] = useActionState(
     createRegularOrder.bind(null, cart),
     null,
   );
+  const purchaseTracked = useRef(false);
 
   const totalDiscountedPrice = cart.reduce(
     (sum: number, item) =>
@@ -81,20 +83,50 @@ export default function ShippingForm({ user }: { user?: Partial<IUser> }) {
 
       window.location.href = state.paymentUrl;
     } else if (state?.success) {
+      if (!purchaseTracked.current) {
+        trackGoogleEvent("purchase", {
+          transaction_id: state.data?.orderId,
+          currency: "BDT",
+          value: totalAmount,
+          items: cart.map((item) => ({
+            item_id: item.book._id,
+            item_name: item.book.title,
+            price: item.book.discountedPrice || item.book.price,
+            quantity: item.quantity,
+          })),
+        });
+        purchaseTracked.current = true;
+      }
+
       toast.success(state.message || "Order created successfully!");
       clearCart();
       router.push(`/success-order/${state?.data?.orderId}`);
     } else if (state?.success === false) {
       toast.error(state.message || "Failed to create order.");
     }
-  }, [state, clearCart, router]);
+  }, [state, clearCart, router, cart, totalAmount]);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
       <div className="bg-white p-5 rounded shadow md:col-span-2 space-y-6">
         <h2 className="text-xl font-semibold mb-4">ডেলিভারি ঠিকানা</h2>
 
-        <form action={formAction} className="space-y-3">
+        <form
+          action={formAction}
+          onSubmit={() => {
+            trackGoogleEvent("begin_checkout", {
+              currency: "BDT",
+              value: totalAmount,
+              items: cart.map((item) => ({
+                item_id: item.book._id,
+                item_name: item.book.title,
+                price: item.book.discountedPrice || item.book.price,
+                quantity: item.quantity,
+              })),
+            });
+          }}
+          className="space-y-3"
+        >
           <input type="hidden" name="orderType" value="REGULAR" />
           {/* Name, Email, Phone */}
           <div className="flex flex-col md:flex-row gap-2">
@@ -242,9 +274,9 @@ export default function ShippingForm({ user }: { user?: Partial<IUser> }) {
                   <SelectValue placeholder="পেমেন্ট পদ্ধতি নির্বাচন করুন" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="SSLCommerz">
+                  {/* <SelectItem value="SSLCommerz">
                     SSLCommerz (Online)
-                  </SelectItem>
+                  </SelectItem> */}
                   <SelectItem value="COD">ক্যাশ অন ডেলিভারি (COD)</SelectItem>
                 </SelectContent>
               </Select>

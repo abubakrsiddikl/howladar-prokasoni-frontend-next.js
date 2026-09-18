@@ -238,6 +238,7 @@ import { useLocationData } from "@/hooks/useLocationData";
 import { createCampaignOrder } from "@/services/Order/order.api";
 import { ICampaign } from "@/types";
 import { trackMetaEvent } from "@/components/shared/MetaPixelEvent";
+import { trackGoogleEvent } from "@/lib/analytics";
 
 interface ICampaignCheckoutFormProps {
   campaign: ICampaign;
@@ -273,6 +274,18 @@ export default function CampaignCheckoutForm({
 
   useEffect(() => {
     if (state?.success) {
+      trackGoogleEvent("purchase", {
+        transaction_id: state.data?.orderId,
+        currency: "BDT",
+        value: totalAmount,
+        items: [{
+          item_id: campaign._id || campaign.slug,
+          item_name: campaign.title,
+          price: campaign.campaignPrice,
+          quantity: 1,
+          item_category: "campaign",
+        }],
+      });
       toast.success("অর্ডারটি সফলভাবে সম্পন্ন হয়েছে!");
       router.push(`/success-order/${state?.data?.orderId}`);
       trackMetaEvent("Purchase", {
@@ -291,6 +304,23 @@ export default function CampaignCheckoutForm({
     <form
       action={formAction}
       onSubmit={() => {
+        trackGoogleEvent("begin_checkout", {
+          currency: "BDT",
+          value: totalAmount,
+          items: [{
+            item_id: campaign._id || campaign.slug,
+            item_name: campaign.title,
+            price: campaign.campaignPrice,
+            quantity: 1,
+            item_category: "campaign",
+          }],
+        });
+        trackGoogleEvent("campaign_order_submit", {
+          campaign_id: campaign._id || campaign.slug,
+          campaign_name: campaign.title,
+          value: totalAmount,
+          currency: "BDT",
+        });
         trackMetaEvent("InitiateCheckout", {
           content_ids: campaign._id ? [campaign._id] : [],
           content_name: campaign.title,

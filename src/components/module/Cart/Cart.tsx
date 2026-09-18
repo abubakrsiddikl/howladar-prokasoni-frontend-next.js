@@ -2,10 +2,30 @@
 import useCart from "@/hooks/useCart";
 import Link from "next/link";
 import CartItemCard from "./CartItemCard";
+import { useEffect } from "react";
+import { trackGoogleEvent } from "@/lib/analytics";
 
 
 export default function Cart() {
   const { cart, clearCart } = useCart();
+
+  useEffect(() => {
+    if (cart.length === 0) return;
+
+    trackGoogleEvent("view_cart", {
+      currency: "BDT",
+      value: cart.reduce(
+        (sum, item) => sum + item.book.price * item.quantity,
+        0,
+      ),
+      items: cart.map((item) => ({
+        item_id: item.book._id,
+        item_name: item.book.title,
+        price: item.book.discountedPrice || item.book.price,
+        quantity: item.quantity,
+      })),
+    });
+  }, [cart]);
 
   const total = cart.reduce(
     (sum: number, item) => sum + item.book?.price * item.quantity,

@@ -5,6 +5,14 @@ import TablePagination from "@/components/shared/Management/TablePagination";
 import { Button } from "@/components/ui/button";
 import { queryStringFormatter } from "@/lib/formatter";
 import { getAllAuthors } from "@/services/Author/author.api";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "লেখকবৃন্দ",
+  description:
+    "হাওলাদার প্রকাশনীর লেখকবৃন্দ এবং তাঁদের প্রকাশিত বই আবিষ্কার করুন।",
+  alternates: { canonical: "/author" },
+};
 
 const AuthorsListPage = async ({
   searchParams,

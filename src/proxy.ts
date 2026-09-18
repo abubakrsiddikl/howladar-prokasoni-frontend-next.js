@@ -13,6 +13,7 @@ import {
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const accessToken = await getCookie("accessToken");
+  // console.log("acessToken",accessToken)
 
   let userRole: TRole | null = null;
   if (accessToken) {

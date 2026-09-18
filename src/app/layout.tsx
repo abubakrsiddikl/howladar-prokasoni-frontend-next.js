@@ -8,6 +8,7 @@ import { CartProvider } from "@/context/cart/CartContext";
 import { Suspense } from "react";
 import Script from "next/script";
 import Image from "next/image";
+import GoogleAnalyticsPageView from "@/components/shared/GoogleAnalyticsPageView";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,6 +19,8 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+const googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://howladarporkasoni.com.bd"),
@@ -101,8 +104,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="bn">
       <head>
+        {/* Google Analytics */}
+        {googleAnalyticsId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${googleAnalyticsId}', { send_page_view: false });
+              `}
+            </Script>
+          </>
+        )}
+
         {/* meta pixel */}
         {/*  Meta Pixel Script */}
         <Script
@@ -137,7 +158,12 @@ export default function RootLayout({
             alt="meta-pixel"
           />
         </noscript>
-        <CartProvider>{children}</CartProvider>
+        <CartProvider>
+          <Suspense fallback={null}>
+            <GoogleAnalyticsPageView />
+          </Suspense>
+          {children}
+        </CartProvider>
 
         <Toaster position="top-center" richColors></Toaster>
         <Suspense fallback={null}>

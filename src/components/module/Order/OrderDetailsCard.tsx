@@ -277,11 +277,23 @@ export default function OrderDetailsCard({
   const router = useRouter();
   const [orderStatus, setOrderStatus] = useState(order.currentStatus);
   const campaign = order?.campaignId;
-  console.log(campaign, "camp");
 
   // A guest/campaign order has no book cart — it's always a single
   // campaign product. Everything else in the card stays the same.
   const isGuestCampaignOrder = order.orderType === "CAMPAIGN" && !!campaign;
+  const isCustomOrder =
+    order.orderSource !== undefined &&
+    order.orderSource !== "WEBSITE" &&
+    !isGuestCampaignOrder;
+  // const orderSourceLabels = {
+  //   MESSENGER: "মেসেঞ্জার",
+  //   WHATSAPP: "হোয়াটসঅ্যাপ",
+  //   WEBSITE: "ওয়েবসাইট",
+  //   OTHER: "অন্যান্য",
+  // } as const;
+  const orderSourceLabel = order.orderSource
+    ? order.orderSource
+    : "N/A";
   const isAdminOrManager =
     user?.role === userRoleConstant.ADMIN ||
     user?.role === userRoleConstant.STORE_MANAGER;
@@ -339,6 +351,15 @@ export default function OrderDetailsCard({
         <p className="text-sm text-gray-500">
           Placed: {format(new Date(order?.createdAt), "MMM d, yyyy h:mm a")}
         </p>
+        {/* <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600">
+          <span>অর্ডারের ধরন: {order.orderType}</span>
+          <span>অর্ডারের মাধ্যম: {orderSourceLabel}</span>
+        </div> */}
+        {/* {isCustomOrder && order.description && order.description !== "N/A" && (
+          <p className="mt-2 text-sm text-gray-600">
+            বিবরণ: {order.description}
+          </p>
+        )} */}
       </div>
 
       {/* Responsive Layout: left timeline, right summary */}
@@ -351,7 +372,21 @@ export default function OrderDetailsCard({
           <h2 className="text-lg font-bold mb-4">Order Summary</h2>
           <div className="border-t border-dashed border-[#708dbf] my-4" />
 
-          {isGuestCampaignOrder ? (
+          {isCustomOrder ? (
+            <div className="space-y-3 rounded-md bg-slate-50 p-4 text-sm text-gray-700">
+              <p className="font-semibold text-gray-900">এটি কাস্টম অর্ডার।</p>
+              <p>
+                এটি {orderSourceLabel} থেকে তৈরি করা একটি ম্যানুয়াল কাস্টম
+                অর্ডার।
+              </p>
+              {order.description && order.description !== "N/A" && (
+                <p>
+                  <span className="font-semibold">বিবরণ:</span>{" "}
+                  {order.description}
+                </p>
+              )}
+            </div>
+          ) : isGuestCampaignOrder ? (
             // Guest / campaign order: no book cart, just the single
             // campaign product this order was placed against.
             <div className="space-y-4">
@@ -432,7 +467,7 @@ export default function OrderDetailsCard({
           )}
 
           <div className="mt-6 space-y-2 text-right">
-            {!isGuestCampaignOrder && (
+            {!isGuestCampaignOrder && !isCustomOrder && (
               <>
                 <div className="flex justify-between">
                   <span>Total items</span>

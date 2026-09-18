@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import InputFieldError from "@/components/shared/InputFieldError";
 import { Button } from "@/components/ui/button";
@@ -15,16 +14,26 @@ import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 import GoogleLogin from "./GoogleLogin";
 import Link from "next/link";
+import { trackGoogleEvent } from "@/lib/analytics";
 
 const LoginForm = ({ redirect }: { redirect?: string }) => {
   const [state, formAction, isPending] = useActionState(loginUser, null);
   useEffect(() => {
+    if (state?.success) {
+      trackGoogleEvent("login", { method: "email" });
+    }
+
     if (state && !state.success && state.message) {
       toast.error(state.message);
     }
   }, [state]);
   return (
-    <form action={formAction}>
+    <form
+      action={formAction}
+      onSubmit={() => {
+        trackGoogleEvent("login_attempt", { method: "email" });
+      }}
+    >
       {redirect && <input type="hidden" name="redirect" value={redirect} />}
       <FieldGroup>
         <div className="grid grid-cols-1 gap-4">

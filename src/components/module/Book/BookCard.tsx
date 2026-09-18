@@ -5,6 +5,7 @@ import useCart from "@/hooks/useCart";
 import type { IBook } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
+import { trackGoogleEvent } from "@/lib/analytics";
 
 
 export default function BookCard({
@@ -21,6 +22,18 @@ export default function BookCard({
   const { addToCart } = useCart();
 
   const handleAddToCart = async () => {
+    trackGoogleEvent("add_to_cart", {
+      currency: "BDT",
+      value: price,
+      items: [{
+        item_id: _id,
+        item_name: title,
+        price,
+        quantity: 1,
+        item_brand: author?.name,
+      }],
+    });
+
     addToCart({
       quantity: 1,
       book: {

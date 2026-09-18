@@ -10,9 +10,10 @@ import "swiper/css/pagination";
 
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import { IBanner, ICampaign } from "@/types";
+import { ICampaign } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
+import { trackGoogleEvent } from "@/lib/analytics";
 
 export default function BannerContent({ banners }: { banners: ICampaign[] }) {
   return (
@@ -36,7 +37,18 @@ export default function BannerContent({ banners }: { banners: ICampaign[] }) {
       >
         {banners?.map((banner) => (
           <SwiperSlide key={banner._id}>
-            <Link href={banner.slug ? `/campaign/${banner.slug}` : "/"}>
+            <Link
+              href={banner.slug ? `/campaign/${banner.slug}` : "/"}
+              onClick={() => {
+                if (banner.slug) {
+                  trackGoogleEvent("campaign_banner_click", {
+                    campaign_id: banner._id || banner.slug,
+                    campaign_name: banner.title,
+                    cta_location: "home_banner",
+                  });
+                }
+              }}
+            >
               <Image
                 src={banner.bannerImage}
                 className="w-full h-[194px] md:h-[300px] rounded-md"

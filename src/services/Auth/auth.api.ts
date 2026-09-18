@@ -9,7 +9,7 @@ import {
 import { apiRequest } from "../apiClient";
 import { ILoginResponse, IResponse, IUser, TRole } from "@/types";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { deleteCookie, setCookie } from "./tokenHandlers";
+import { deleteCookie, getCookie, setCookie } from "./tokenHandlers";
 import {
   getDefaultDashboardRoute,
   isValidRedirectForRole,
@@ -115,7 +115,16 @@ export const loginUser = async (
 // logout
 
 export const logoutUser = async () => {
+  // console.log("handle logout start");
   await deleteCookie("accessToken");
+  // const accessToken = await getCookie("accessToken");
+  // console.log(accessToken)
+  // await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/logout`, {
+  //   method: "POST",
+  //   credentials: "include",
+  // });
+  // console.log("logout");
+  // revalidateTag("user-info", { expire: 0 });
   redirect("/login?loggedOut=true");
 };
 
