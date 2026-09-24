@@ -16,6 +16,7 @@ export async function proxy(request: NextRequest) {
   // console.log("acessToken",accessToken)
 
   let userRole: TRole | null = null;
+  // console.log("secret",process.env.JWT_ACCESS_SECRET)
   if (accessToken) {
     const verifiedToken: JwtPayload | string = jwt.verify(
       accessToken,

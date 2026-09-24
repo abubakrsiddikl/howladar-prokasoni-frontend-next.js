@@ -291,9 +291,7 @@ export default function OrderDetailsCard({
   //   WEBSITE: "ওয়েবসাইট",
   //   OTHER: "অন্যান্য",
   // } as const;
-  const orderSourceLabel = order.orderSource
-    ? order.orderSource
-    : "N/A";
+  const orderSourceLabel = order.orderSource ? order.orderSource : "N/A";
   const isAdminOrManager =
     user?.role === userRoleConstant.ADMIN ||
     user?.role === userRoleConstant.STORE_MANAGER;
@@ -487,6 +485,12 @@ export default function OrderDetailsCard({
               <span>Discount</span>
               <span>Tk. {order.totalDiscountedPrice}</span>
             </div>
+            {order.orderType === "CAMPAIGN" && (
+              <div className="flex justify-between">
+                <span>Campaign Price</span>
+                <span>Tk. {order.totalAmount - order.deliveryCharge}</span>
+              </div>
+            )}
             <div className="flex justify-between font-bold">
               <span>Payable Amount</span>
               <span>Tk. {order.totalAmount}</span>
